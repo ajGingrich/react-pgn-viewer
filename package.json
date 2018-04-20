@@ -1,0 +1,26 @@
+{
+  "name": "react-pgn-viewer",
+  "version": "0.0.1",
+  "description": "React component for creating an interactive pgn viewer from string",
+  "main": "webpack.config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajGingrich/react-pgn-viewer.git"
+  },
+  "author": "Andrew Gingrich",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ajGingrich/react-pgn-viewer/issues"
+  },
+  "homepage": "https://github.com/ajGingrich/react-pgn-viewer#readme",
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  }
+}
