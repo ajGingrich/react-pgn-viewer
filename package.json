@@ -19,8 +19,9 @@
     "url": "https://github.com/ajGingrich/react-pgn-viewer/issues"
   },
   "homepage": "https://github.com/ajGingrich/react-pgn-viewer#readme",
-  "dependencies": {
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+  "dependencies": {},
+  "devDependencies": {
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2"
   }
 }
