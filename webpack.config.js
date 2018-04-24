@@ -9,8 +9,15 @@ module.exports = {
         path: path.join(__dirname, 'examples/dist'),
         filename: 'bundle.js'
     },
+    resolve: {
+      alias: {
+        'Components': path.join(__dirname, 'examples/components'),
+      },
+      extensions: ['.js', '.json'],
+      modules: [path.join(__dirname, 'examples/'), 'node_modules']
+    },
     module: {
-        loaders: [
+        rules: [
             { test: /\.jsx?$/, loaders: ['babel-loader'], exclude: /node_modules/ },
             { test: /\.css$/, loaders: ['style-loader', { loader: 'css-loader', options: { importLoaders: 1 } }] },
       ]
@@ -20,5 +27,6 @@ module.exports = {
           template: 'examples/index.template.ejs',
           filename: '../index.html'
       }),
-    ]
+    ],
+    mode: 'development'
 };

@@ -1,9 +1,9 @@
 import React from 'react';
-import { ErrorBoundary } from 'Components'
+import { ErrorBoundary, App } from 'Components'
 
 const Root = () => {
   return <ErrorBoundary>
-          <Routes />
+          <App />
         </ErrorBoundary>;
 };
 
