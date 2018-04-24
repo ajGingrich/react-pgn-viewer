@@ -58,4 +58,4 @@ typings/
 .env
 
 # webpack bundle
-examples/src/dist
+examples/src/dist/
