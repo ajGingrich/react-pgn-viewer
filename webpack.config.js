@@ -3,18 +3,18 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: [
-        './examples/index.js'
+        './examples/src/index.js'
     ],
     output: {
-        path: path.join(__dirname, 'examples/dist'),
+        path: path.join(__dirname, 'examples/src/dist'),
         filename: 'bundle.js'
     },
     resolve: {
       alias: {
-        'Components': path.join(__dirname, 'examples/components'),
+        'Components': path.join(__dirname, 'examples/src/components'),
       },
       extensions: ['.js', '.json'],
-      modules: [path.join(__dirname, 'examples/'), 'node_modules']
+      modules: [path.join(__dirname, 'examples/src/'), 'node_modules']
     },
     module: {
         rules: [
@@ -24,7 +24,7 @@ module.exports = {
     },
     plugins: [
       new HtmlWebpackPlugin({
-          template: 'examples/index.template.ejs',
+          template: 'examples/src/index.template.ejs',
           filename: '../index.html'
       }),
     ],
