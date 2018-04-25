@@ -7,8 +7,13 @@
     "test": "test"
   },
   "scripts": {
+<<<<<<< HEAD
     "dev": "nodemon --ignore 'examples/src/' --ignore 'src/' --exec babel-node examples/server.js",
     "webpack": "webpack"
+=======
+    "dev": "nodemon --ignore 'examples/src/' --exec babel-node examples/server.js",
+    "webpack": "webpack --progress"
+>>>>>>> add hot reloading and working server
   },
   "repository": {
     "type": "git",
