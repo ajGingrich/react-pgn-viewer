@@ -1,4 +1,5 @@
 import React from 'react'
+import PgnViewer from 'src'
 
 class App extends React.Component {
 
@@ -8,7 +9,10 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>Chess</div>
+      <div>
+        <div>React Pgn Viewer</div>
+        <PgnViewer />
+      </div>
     )
   }
 }

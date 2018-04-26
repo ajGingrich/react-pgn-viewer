@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "dev": "nodemon --ignore 'examples/src/' --exec babel-node examples/server.js",
+    "dev": "nodemon --ignore 'examples/src/' --ignore 'src/' --exec babel-node examples/server.js",
     "webpack": "webpack"
   },
   "repository": {
