@@ -7,13 +7,8 @@
     "test": "test"
   },
   "scripts": {
-<<<<<<< HEAD
     "dev": "nodemon --ignore 'examples/src/' --ignore 'src/' --exec babel-node examples/server.js",
-    "webpack": "webpack"
-=======
-    "dev": "nodemon --ignore 'examples/src/' --exec babel-node examples/server.js",
     "webpack": "webpack --progress"
->>>>>>> add hot reloading and working server
   },
   "repository": {
     "type": "git",
@@ -26,7 +21,8 @@
   },
   "homepage": "https://github.com/ajGingrich/react-pgn-viewer#readme",
   "dependencies": {
-    "chess.js": "^0.10.2"
+    "chess.js": "^0.10.2",
+    "react-chessboardjs": "^0.5.3"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
