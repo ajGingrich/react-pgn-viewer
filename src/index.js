@@ -1,6 +1,7 @@
 import React from 'react'
 import Chess from 'chess.js'
 import Chessboard from 'react-chessboardjs'
+import path from 'path'
 
 class PgnViewer extends React.Component {
 
@@ -21,6 +22,7 @@ class PgnViewer extends React.Component {
     return (
       <div>
         <div>{chessPosition}</div>
+        {/* <img src={require('./images/chesspieces/wikipedia/bB.svg')} /> */}
         <Chessboard
           blackSquareColour="steelblue" // Default: '#b58863'
           fen="rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R" // The 'pieces' part of a fen string
@@ -41,4 +43,8 @@ class PgnViewer extends React.Component {
   }
 }
 
-export default PgnViewer
+export default PgnViewer => <div>
+  <img src={require('./images/chesspieces/wikipedia/bB.svg')} />
+</div>
+
+// export default PgnViewer
