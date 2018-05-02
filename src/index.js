@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Chess from 'chess.js'
 import Chessboard from 'react-chessboardjs'
 import path from 'path'
@@ -10,26 +11,26 @@ class PgnViewer extends React.Component {
   }
 
   render() {
+    const { blackSquareColour, fen, isDraggable, orientation } = this.props
     const chess = new Chess()
+
     chess.move('e4')
     chess.move('e6')
     chess.move('d4')
     chess.move('d5')
 
     const chessPosition = chess.ascii()
-    console.log(chessPosition)
+    // console.log(chessPosition)
 
     return (
       <div>
         <div>{chessPosition}</div>
-        {/* <img src={require('./images/chesspieces/wikipedia/bB.svg')} /> */}
+        <img src={require('./images/chesspieces/wikipedia/bB.svg')} />
         <Chessboard
-          blackSquareColour="steelblue" // Default: '#b58863'
-          fen="rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R" // The 'pieces' part of a fen string
-          // (additional info such as side to move will be stripped). ['start' | 'empty'] also valid.
-          // Default: 'start'
-          isDraggable={true} // Can the pieces be dragged? Default: true
-          orientation="b" // ['w', 'b'] Default: 'w'
+          blackSquareColour={blackSquareColour}
+          fen={fen}
+          isDraggable={isDraggable}
+          orientation={orientation}
           // pieceTheme="uscf" // ['alpha', 'uscf', 'wikipedia'] Default: 'wikipedia'
           style={{
             border: '2px solid lightgrey',
@@ -43,8 +44,11 @@ class PgnViewer extends React.Component {
   }
 }
 
-export default PgnViewer => <div>
-  <img src={require('./images/chesspieces/wikipedia/bB.svg')} />
-</div>
+PgnViewer.propTypes = {
+  blackSquareColour: PropTypes.string,
+  fen:PropTypes.string,
+  isDraggable: PropTypes.bool,
+  orientation: PropTypes.string,
+}
 
-// export default PgnViewer
+export default PgnViewer
