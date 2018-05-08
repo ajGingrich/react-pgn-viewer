@@ -11,51 +11,80 @@ class PgnViewer extends React.Component {
   constructor(props) {
     super(props)
 
-    this._handleNextMove = this._handleNextMove.bind(this);
-    this._handlePreviousMove = this._handlePreviousMove.bind(this);
-    this._handleReset = this._handleReset.bind(this);
-  }
-
-  _handleNextMove() {
-    console.log('handling forward')
-    //do stuff
-  }
-
-  _handlePreviousMove() {
-    console.log('going backward!')
-  }
-
-  _handleReset() {
-    console.log('resetting')
-  }
-
-  render() {
-    const { blackSquareColour, fen, isDraggable, orientation } = this.props
     const chess = new Chess()
-
-    //make a chess game out of pgn, split etc
-    //do the moves so everything is in chessHistory
-
+    const index = 0
+    //load here?
 
     chess.move('e4')
     chess.move('e6')
     chess.move('d4')
     chess.move('d5')
 
-    const chessHistory = chess.history()
-    // console.log(chessHistory)
+    const moves = chess.history()
+    chess.reset()
 
-    const chessPosition = chess.fen()
-    // console.log(chessPosition)
+    //list of moves in history
+
+    this.state = { chess: chess, moves: moves, index: index}
+
+    this._handleNextMove = this._handleNextMove.bind(this);
+    this._handlePreviousMove = this._handlePreviousMove.bind(this);
+    this._handleReset = this._handleReset.bind(this);
+  }
+
+  _handleNextMove() {
+    const { moves, chess } = this.state
+    let { index } = this.state
+
+    if(index >= moves.length) return
+
+    chess.move(moves[index])
+    index++
+
+    this.setState({
+      chess: chess,
+      index: index,
+    })
+  }
+
+  _handlePreviousMove() {
+    const { chess } = this.state
+    let { index } = this.state
+
+    if(!index) return
+
+    chess.undo()
+    index--
+
+    this.setState({
+      chess: chess,
+      index: index,
+    })
+  }
+
+  _handleReset() {
+    const { chess } = this.state
+    const index = 0
+
+    chess.reset()
+
+    this.setState({
+      chess: chess,
+      index: index,
+    })
+  }
+
+  render() {
+    const { blackSquareColour, fen, isDraggable, orientation } = this.props
+    const { chess, moves, index } = this.state
 
     return (
       <div>
-        <div>{chessHistory}</div>
         {/* <img src={require('./images/chesspieces/wikipedia/bB.svg')} /> */}
         <BoardHeader />
         <Chessboard
           blackSquareColour={blackSquareColour}
-          fen={fen}
+          fen={chess.fen()}
           isDraggable={isDraggable}
           orientation={orientation}
           // pieceTheme="uscf" // ['alpha', 'uscf', 'wikipedia'] Default: 'wikipedia'
