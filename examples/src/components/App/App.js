@@ -8,13 +8,16 @@ class App extends React.Component {
   }
 
   render() {
+    const headerStyle = {
+      color: '#18003f'
+    }
+
     return (
       <div>
-        <div>React Pgn Viewer</div>
+        <h2 style={headerStyle}>React Pgn Viewer</h2>
         <PgnViewer
           blackSquareColour="steelblue"
-          // fen="rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R"
-          isDraggable
+          isDraggable={false}
           orientation="w"
         />
       </div>
