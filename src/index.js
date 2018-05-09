@@ -13,6 +13,7 @@ class PgnViewer extends React.Component {
     this.createInnerHtml = this.createInnerHtml.bind(this)
     this.setPgn = this.setPgn.bind(this)
 
+    //save fens in state? in case of updating
     this.state = { pgns: null }
   }
 
@@ -22,7 +23,6 @@ class PgnViewer extends React.Component {
 
   setPgn(pgns) {
     const { children, blackSquareColour, fen, isDraggable, orientation } = this.props
-    // const { pgns } = this.state
     const nodes = ReactDOM.findDOMNode(this).querySelectorAll('pgn')
 
     for(let i=0; i<nodes.length; i++) {
@@ -34,8 +34,6 @@ class PgnViewer extends React.Component {
         orientation={orientation}
       />, nodes[i])
     }
-
-    //remove old pgn here??!!?!
   }
 
   componentDidMount() {
@@ -51,13 +49,10 @@ class PgnViewer extends React.Component {
     this.setPgn(pgns)
   }
 
-  // componentDidUpdate() {
-  //   this.setPgn()
-  // }
-
-  // componentWillUnmount() {
-  //   ReactDOM.unmountComponentAtNode(this)
-  // }
+  componentDidUpdate() {
+    // extra components in react dev tools?!
+    this.setPgn(this.state.pgns)
+  }
 
   render() {
     const { blackSquareColour, fen, isDraggable, orientation, children, innerHTML } = this.props
@@ -66,13 +61,15 @@ class PgnViewer extends React.Component {
       <div>
         {innerHTML && <div dangerouslySetInnerHTML={this.createInnerHtml()}></div>}
         {!innerHTML &&
-          <CompleteBoard
-            children={children}
-            blackSquareColour={blackSquareColour}
-            fen={fen}
-            isDraggable={isDraggable}
-            orientation={orientation}
-        />
+          <div>
+            <CompleteBoard
+              children={children}
+              blackSquareColour={blackSquareColour}
+              fen={fen}
+              isDraggable={isDraggable}
+              orientation={orientation}
+            />
+          </div>
         }
       </div>
     )
