@@ -65,10 +65,10 @@ class CompleteBoard extends React.Component {
   }
 
   componentDidMount() {
-    const { children } = this.props
+    const { pgnInformation } = this.props
     const chess = new Chess()
     const index = 0
-    const pgnString = children.trim().replace(/\[/g, '')
+    const pgnString = pgnInformation.trim().replace(/\[/g, '')
 
     if(!pgnString) return null
 
@@ -94,7 +94,7 @@ class CompleteBoard extends React.Component {
   }
 
   render() {
-    const { blackSquareColour, fen, isDraggable, orientation, children, innerHTML } = this.props
+    const { blackSquareColour, fen, isDraggable, orientation, innerHTML } = this.props
     const { chess, moves, index, headerInfo } = this.state
 
     return (
