@@ -1,6 +1,7 @@
 import { AppContainer } from 'react-hot-loader';
 import React from 'react';
 import ReactDOM from 'react-dom';
+// import '../../node_modules/highlight.js/styles/darcula.css';
 import Root from './Root'
 
 const render = Component =>
