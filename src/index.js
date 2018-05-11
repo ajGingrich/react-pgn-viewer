@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import hljs from 'highlight.js';
+
 import CompleteBoard from './CompleteBoard'
 
 function createMarkup() {
@@ -10,8 +12,10 @@ function createMarkup() {
 class PgnViewer extends React.Component {
   constructor(props) {
     super(props)
+
     this.createInnerHtml = this.createInnerHtml.bind(this)
     this.setPgn = this.setPgn.bind(this)
+    this.additionalHTMLModification = this.additionalHTMLModification.bind(this)
 
     //save fens in state? in case of updating
     this.state = { pgns: null }
@@ -19,6 +23,18 @@ class PgnViewer extends React.Component {
 
   createInnerHtml() {
     return {__html: this.props.children};
+  }
+
+  additionalHTMLModification() {
+    //add support for multiple nodes/functions?
+    const { nodeToModify, nodeModification } = this.props
+    const nodes = ReactDOM.findDOMNode(this).querySelectorAll(nodeToModify)
+
+    if(typeof nodeModification !== 'function' || !nodeToModify) return null
+
+    for (let i = 0; i < nodes.length; i++) { //eslint-disable-line
+        nodeModification(nodes[i])
+    }
   }
 
   setPgn(pgns) {
@@ -46,11 +62,13 @@ class PgnViewer extends React.Component {
 
     this.setState({ pgns: pgns })
 
+    this.additionalHTMLModification()
     this.setPgn(pgns)
   }
 
   componentDidUpdate() {
     // extra components in react dev tools?!
+    this.additionalHTMLModification()
     this.setPgn(this.state.pgns)
   }
 
@@ -80,6 +98,8 @@ PgnViewer.propTypes = {
   blackSquareColour: PropTypes.string,
   fen:PropTypes.string,
   isDraggable: PropTypes.bool,
+  nodeToModify: PropTypes.string,
+  nodeModification: PropTypes.func,
   orientation: PropTypes.string,
 }
 
