@@ -5,8 +5,6 @@ import Chess from 'chess.js'
 import BoardHeader from './BoardHeader'
 import BoardFooter from './BoardFooter'
 
-console.log(Chess, 'chess')
-
 class CompleteBoard extends React.Component {
   constructor(props) {
     super(props)
@@ -67,7 +65,7 @@ class CompleteBoard extends React.Component {
 
   componentDidMount() {
     const { pgnInformation } = this.props
-    const chess = new Chess()
+    const chess = new Chess.Chess() // this ain't good
     const index = 0
     const pgnString = pgnInformation.trim().replace(/\[/g, '')
 
@@ -101,7 +99,6 @@ class CompleteBoard extends React.Component {
     return (
       <div>
         {/* <img src={require('./images/chesspieces/wikipedia/bB.svg')} /> */}
-        <h1> im a chessboard </h1>
         <BoardHeader headerInfo={headerInfo && headerInfo}/>
         {/* <Chessboard
           blackSquareColour={blackSquareColour}
