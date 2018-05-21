@@ -71,7 +71,14 @@ class PgnViewer extends React.Component {
 
     return (
       <div>
-        {innerHTML && <div dangerouslySetInnerHTML={this.createInnerHtml()}></div>}
+        <CompleteBoard
+          children={children}
+          blackSquareColour={blackSquareColour}
+          fen={fen}
+          isDraggable={isDraggable}
+          orientation={orientation}
+        />
+        {/* {innerHTML && <div dangerouslySetInnerHTML={this.createInnerHtml()}></div>}
         {!innerHTML &&
           <div>
             <CompleteBoard
@@ -82,7 +89,7 @@ class PgnViewer extends React.Component {
               orientation={orientation}
             />
           </div>
-        }
+        } */}
       </div>
     )
   }

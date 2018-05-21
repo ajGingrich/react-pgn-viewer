@@ -4,7 +4,8 @@ import Chess from 'chess.js'
 // import Chessboard from 'react-chessboardjs'
 import BoardHeader from './BoardHeader'
 import BoardFooter from './BoardFooter'
-import path from 'path'
+
+console.log(Chess, 'chess')
 
 class CompleteBoard extends React.Component {
   constructor(props) {
@@ -100,6 +101,7 @@ class CompleteBoard extends React.Component {
     return (
       <div>
         {/* <img src={require('./images/chesspieces/wikipedia/bB.svg')} /> */}
+        <h1> im a chessboard </h1>
         <BoardHeader headerInfo={headerInfo && headerInfo}/>
         {/* <Chessboard
           blackSquareColour={blackSquareColour}
