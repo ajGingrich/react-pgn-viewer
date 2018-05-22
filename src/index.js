@@ -1,13 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import hljs from 'highlight.js';
-
 import CompleteBoard from './CompleteBoard'
-
-function createMarkup() {
-  return {__html: 'First &middot; Second'};
-}
 
 class PgnViewer extends React.Component {
   constructor(props) {

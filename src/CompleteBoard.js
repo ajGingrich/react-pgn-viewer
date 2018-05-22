@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Chess from 'chess.js'
-// import Chessboard from 'react-chessboardjs'
+// import * as Chessboard from 'react-chessboardjs'
 import BoardHeader from './BoardHeader'
 import BoardFooter from './BoardFooter'
-import path from 'path'
 
 class CompleteBoard extends React.Component {
   constructor(props) {
@@ -66,7 +65,7 @@ class CompleteBoard extends React.Component {
 
   componentDidMount() {
     const { pgnInformation } = this.props
-    const chess = new Chess()
+    const chess = new Chess.Chess() // this ain't good
     const index = 0
     const pgnString = pgnInformation.trim().replace(/\[/g, '')
 
