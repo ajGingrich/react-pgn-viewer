@@ -74,6 +74,7 @@ class PgnViewer extends React.Component {
         {innerHTML && <div dangerouslySetInnerHTML={this.createInnerHtml()}></div>}
         {!innerHTML &&
           <div>
+            <h2> hi </h2>
             <CompleteBoard
               children={children}
               blackSquareColour={blackSquareColour}
