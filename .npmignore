@@ -1,4 +1,11 @@
 # examples
 examples/
 
-# do something about dist here...
+# node modules
+node_modules
+
+# babel rc
+.babelrc
+
+# yarn error
+yarn-error.log

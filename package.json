@@ -1,8 +1,8 @@
 {
   "name": "react-pgn-viewer",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "React component for creating an interactive pgn viewer from string",
-  "main": "webpack.config.js",
+  "main": "dist/bundle.js",
   "directories": {
     "test": "test"
   },
@@ -22,8 +22,6 @@
   "homepage": "https://github.com/ajGingrich/react-pgn-viewer#readme",
   "dependencies": {
     "chess.js": "^0.10.2",
-    "next": "^5.0.0",
-    "next-images": "^0.9.2",
     "react": "^16.3.2",
     "react-chessboardjs": "^0.5.3",
     "react-dom": "^16.3.2"
