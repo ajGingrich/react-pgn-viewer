@@ -50,7 +50,7 @@ gulp.task("rollup", function() {
       }),
       require("rollup-plugin-uglify") //it's not being uglfied
     ],
-  }).pipe(source("bundle.js"))
+  }).pipe(source("index.js"))
     .pipe(gulp.dest("dist"));
 })
 

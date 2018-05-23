@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Chess from 'chess.js'
-import * as Chessboard from 'react-chessboardjs'
+// import * as Chessboard from 'react-chessboardjs'
 import BoardHeader from './BoardHeader'
 import BoardFooter from './BoardFooter'
 
@@ -100,7 +100,7 @@ class CompleteBoard extends React.Component {
       <div>
         {/* <img src={require('./images/chesspieces/wikipedia/bB.svg')} /> */}
         <BoardHeader headerInfo={headerInfo && headerInfo}/>
-        <Chessboard
+        {/* <Chessboard
           blackSquareColour={blackSquareColour}
           fen={chess && chess.fen() || 'start'}
           isDraggable={isDraggable}
@@ -110,7 +110,7 @@ class CompleteBoard extends React.Component {
           }}
           whiteSquareColour="aliceblue"
           width={400}
-        />
+        /> */}
         <BoardFooter
           onNextMove={this._handleNextMove}
           onPreviousMove={this._handlePreviousMove}
