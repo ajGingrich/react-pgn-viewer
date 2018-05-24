@@ -71,7 +71,6 @@ class PgnViewer extends React.Component {
 
     return (
       <div>
-        <h1>pls work</h1>
         {innerHTML && <div dangerouslySetInnerHTML={this.createInnerHtml()}></div>}
         {!innerHTML &&
           <div>

@@ -23,7 +23,6 @@ gulp.task("rollup", function() {
     plugins: [
       require("rollup-plugin-babel")({
         exclude: 'node_modules/**',
-        // plugins: ['external-helpers'],
         externalHelpers: false
       }),
       require("rollup-plugin-node-resolve")({
@@ -33,7 +32,6 @@ gulp.task("rollup", function() {
       }),
       require("rollup-plugin-commonjs")({
         include: 'node_modules/**',
-        exclude: 'node_modules/react-chessboardjs/index.js',
          /// exclude react?? only in external
         namedExports: {
           'node_modules/react/index.js': [
