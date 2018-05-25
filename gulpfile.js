@@ -41,6 +41,9 @@ gulp.task("rollup", function() {
             'Children',
             'createElement',
           ]
+          // 'node_modules/react-chessboardjs/dist/index.js': [
+          //   'Chessboard',
+          // ]
         },
       }), // bug with 9.1.3 see https://github.com/dherges/ng-packagr/issues/657
       require("rollup-plugin-replace")({
