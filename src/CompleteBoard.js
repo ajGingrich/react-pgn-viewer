@@ -4,6 +4,7 @@ import Chess from 'chess.js'
 import Chessboard from 'reactjs-chessboard'
 import BoardHeader from './BoardHeader'
 import BoardFooter from './BoardFooter'
+import MoveList from './MoveList'
 
 class CompleteBoard extends React.Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class CompleteBoard extends React.Component {
     this._handleNextMove = this._handleNextMove.bind(this);
     this._handlePreviousMove = this._handlePreviousMove.bind(this);
     this._handleReset = this._handleReset.bind(this);
+    this._handleChangeMove = this._handleChangeMove.bind(this);
 
     this.state = {
       chess: null,
@@ -28,6 +30,7 @@ class CompleteBoard extends React.Component {
     if(index >= moves.length) return
 
     chess.move(moves[index])
+    // don't mutate state but make copy and set new one...
     index++
 
     this.setState({
@@ -43,6 +46,7 @@ class CompleteBoard extends React.Component {
     if(!index) return
 
     chess.undo()
+    // don't mutate state but make copy and set new one...
     index--
 
     this.setState({
@@ -56,10 +60,37 @@ class CompleteBoard extends React.Component {
     const index = 0
 
     chess.reset()
+    // don't mutate state but make copy and set new one...
 
     this.setState({
       chess: chess,
       index: index,
+    })
+  }
+
+  _handleChangeMove(moveIndex) {
+    const { moves, chess, index: currentIndex } = this.state
+    // don't mutate state but make copy and set new one...
+
+    console.log(moveIndex, 'move index')
+    console.log(currentIndex, 'state index')
+    if (moveIndex === currentIndex) return
+
+    if (moveIndex < currentIndex) {
+      for (let i=0; i < (currentIndex - moveIndex); i++) {
+        chess.undo()
+      }
+    } else if (moveIndex > currentIndex) {
+      let temporaryIndex = new Number(currentIndex)
+      for (let i=0; i < (moveIndex - currentIndex); i++) {
+        chess.move(moves[temporaryIndex])
+        temporaryIndex++
+      }
+    }
+
+    this.setState({
+      chess: chess,
+      index: moveIndex,
     })
   }
 
@@ -114,6 +145,11 @@ class CompleteBoard extends React.Component {
           onNextMove={this._handleNextMove}
           onPreviousMove={this._handlePreviousMove}
           onReset={this._handleReset}
+        />
+        <MoveList
+          onChangeMove={this._handleChangeMove}
+          currentIndex={index}
+          moves={moves}
         />
       </div>
     )
