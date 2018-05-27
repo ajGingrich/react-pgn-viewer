@@ -6,6 +6,10 @@ var del = require("del")
 var env = process.env.NODE_ENV
 var isProduction = env === 'production'
 
+var babelConfig = {
+  exclude: 'node_modules/**'
+}
+
 gulp.task("clean", function() {
   return del('dist/**', {force:true})
 })
@@ -15,42 +19,43 @@ gulp.task("copy", function() {
     .pipe(gulp.dest("dist"))
 })
 
+var plugins = [
+    require("rollup-plugin-babel")({
+      exclude: 'node_modules/**'
+    }),
+    require("rollup-plugin-node-resolve")({
+      jsnext: true,
+      main: true,
+      browser: true
+    }),
+    require("rollup-plugin-commonjs")({
+      include: 'node_modules/**',
+       /// exclude react?? only in external
+      namedExports: {
+        'node_modules/react/index.js': [
+          'Component',
+          'PureComponent',
+          'Fragment',
+          'Children',
+          'createElement',
+        ]
+      },
+    }), // bug with 9.1.3 see https://github.com/dherges/ng-packagr/issues/657
+    require("rollup-plugin-replace")({
+      'process.env.NODE_ENV': JSON.stringify(env),
+    })
+]
+
+if(isProduction) {
+  plugins.push(require("rollup-plugin-uglify")())
+}
+
 gulp.task("rollup", function() {
   return rollup({
     input: isProduction ? "src/index.js" : "examples/index.js",
     format: isProduction ? "cjs" : "iife",
     name: 'pgn',
-    plugins: [
-      require("rollup-plugin-babel")({
-        exclude: 'node_modules/**',
-        externalHelpers: false
-      }),
-      require("rollup-plugin-node-resolve")({
-        jsnext: true,
-        main: true,
-        browser: true
-      }),
-      require("rollup-plugin-commonjs")({
-        include: 'node_modules/**',
-         /// exclude react?? only in external
-        namedExports: {
-          'node_modules/react/index.js': [
-            'Component',
-            'PureComponent',
-            'Fragment',
-            'Children',
-            'createElement',
-          ]
-          // 'node_modules/react-chessboardjs/dist/index.js': [
-          //   'Chessboard',
-          // ]
-        },
-      }), // bug with 9.1.3 see https://github.com/dherges/ng-packagr/issues/657
-      require("rollup-plugin-replace")({
-        'process.env.NODE_ENV': JSON.stringify(env),
-      }),
-      require("rollup-plugin-uglify") //it's not being uglfied
-    ],
+    plugins: plugins,
   }).pipe(source("index.js"))
     .pipe(gulp.dest("dist"));
 })
