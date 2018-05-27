@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Chess from 'chess.js'
-import Chessboard from 'react-chessboardjs'
+import Chessboard from 'reactjs-chessboard'
 import BoardHeader from './BoardHeader'
 import BoardFooter from './BoardFooter'
 

@@ -29,7 +29,7 @@ class App extends React.Component {
         <h2 style={headerStyle}>React Pgn Viewer</h2>
         <PgnViewer
           blackSquareColour="steelblue"
-          isDraggable={false}
+          isDraggable={true}
           orientation="w"
           nodeToModify={'pre code'}
           nodeModification={this.handleHighlight}
