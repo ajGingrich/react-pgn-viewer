@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-class PreviousMove extends React.Component {
+class PreviousMove extends Component {
 
   constructor(props) {
     super(props)

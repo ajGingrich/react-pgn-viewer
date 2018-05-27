@@ -14,12 +14,14 @@ class CompleteBoard extends React.Component {
     this._handlePreviousMove = this._handlePreviousMove.bind(this);
     this._handleReset = this._handleReset.bind(this);
     this._handleChangeMove = this._handleChangeMove.bind(this);
+    this._handleFlipBoard = this._handleFlipBoard.bind(this);
 
     this.state = {
       chess: null,
       moves: null,
       index: null,
       headerInfo: null,
+      orientation: this.props.orientation
     }
   }
 
@@ -68,12 +70,18 @@ class CompleteBoard extends React.Component {
     })
   }
 
+  _handleFlipBoard() {
+    const newOrientation = this.state.orientation === 'w' ? 'b': 'w'
+
+    this.setState({
+      orientation: newOrientation,
+    })
+  }
+
   _handleChangeMove(moveIndex) {
     const { moves, chess, index: currentIndex } = this.state
     // don't mutate state but make copy and set new one...
 
-    console.log(moveIndex, 'move index')
-    console.log(currentIndex, 'state index')
     if (moveIndex === currentIndex) return
 
     if (moveIndex < currentIndex) {
@@ -124,8 +132,8 @@ class CompleteBoard extends React.Component {
   }
 
   render() {
-    const { blackSquareColour, fen, isDraggable, orientation, innerHTML } = this.props
-    const { chess, moves, index, headerInfo } = this.state
+    const { blackSquareColour, fen, isDraggable, innerHTML } = this.props
+    const { chess, moves, index, headerInfo, orientation } = this.state
 
     return (
       <div>
@@ -142,6 +150,7 @@ class CompleteBoard extends React.Component {
           width={400}
         />
         <BoardFooter
+          onFlipBoard={this._handleFlipBoard}
           onNextMove={this._handleNextMove}
           onPreviousMove={this._handlePreviousMove}
           onReset={this._handleReset}
