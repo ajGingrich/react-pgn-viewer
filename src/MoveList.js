@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import Move from './Move'
 
-class MoveList extends Component {
+class MoveList extends React.Component {
   render() {
     const { moves, currentIndex, onChangeMove } = this.props
 

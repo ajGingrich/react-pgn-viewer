@@ -1,9 +1,6 @@
 # examples
 examples/
 
-# node modules
-node_modules
-
 # babel rc
 .babelrc
 

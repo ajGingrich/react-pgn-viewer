@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import PreviousMove from './PreviousMove'
 import NextMove from './NextMove'
 import Reset from './Reset'
 import Flip from './Flip'
 
-class BoardFooter extends Component {
+class BoardFooter extends React.Component {
 
   render() {
     const { onNextMove, onPreviousMove, onReset, onFlipBoard } = this.props

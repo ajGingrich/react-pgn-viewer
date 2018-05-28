@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
-class BoardHeader extends Component {
+class BoardHeader extends React.Component {
   render() {
     const { headerInfo } = this.props
 

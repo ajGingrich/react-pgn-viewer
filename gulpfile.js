@@ -7,10 +7,6 @@ var env = process.env.NODE_ENV
 var isProduction = env === 'production'
 // bug with rollup-common-js 9.1.3 see https://github.com/dherges/ng-packagr/issues/657)
 
-var babelConfig = {
-  exclude: 'node_modules/**'
-}
-
 gulp.task("clean", function() {
   return del('dist/**', {force:true})
 })
@@ -61,7 +57,7 @@ gulp.task("rollup", function() {
     format: isProduction ? "cjs" : "iife",
     name: 'pgn',
     plugins: plugins,
-    external: isProduction ? ['react', 'react-dom'] : []
+    external: isProduction ? ['react', 'react-dom'] : [],
   }).pipe(source("index.js"))
     .pipe(gulp.dest("dist"));
 })

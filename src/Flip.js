@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
-class Flip extends Component {
+class Flip extends React.Component {
 
   constructor(props) {
     super(props)
