@@ -5,6 +5,7 @@ var webserver = require("gulp-webserver")
 var del = require("del")
 var env = process.env.NODE_ENV
 var isProduction = env === 'production'
+// bug with rollup-common-js 9.1.3 see https://github.com/dherges/ng-packagr/issues/657)
 
 var babelConfig = {
   exclude: 'node_modules/**'
@@ -28,26 +29,30 @@ var plugins = [
       main: true,
       browser: true
     }),
-    require("rollup-plugin-commonjs")({
-      include: 'node_modules/**',
-       /// exclude react?? only in external
-      namedExports: {
-        'node_modules/react/index.js': [
-          'Component',
-          'PureComponent',
-          'Fragment',
-          'Children',
-          'createElement',
-        ]
-      },
-    }), // bug with 9.1.3 see https://github.com/dherges/ng-packagr/issues/657
     require("rollup-plugin-replace")({
       'process.env.NODE_ENV': JSON.stringify(env),
     })
 ]
 
 if(isProduction) {
+  plugins.push(require("rollup-plugin-commonjs")({
+    include: 'node_modules/**'
+  }))
   plugins.push(require("rollup-plugin-uglify")())
+  // plugins.push(require("rollup-analyzer-plugin")())
+} else {
+  plugins.push(require("rollup-plugin-commonjs")({
+    include: 'node_modules/**',
+    namedExports: {
+      'node_modules/react/index.js': [
+        'Component',
+        'PureComponent',
+        'Fragment',
+        'Children',
+        'createElement',
+      ]
+    },
+  }))
 }
 
 gulp.task("rollup", function() {
@@ -56,6 +61,7 @@ gulp.task("rollup", function() {
     format: isProduction ? "cjs" : "iife",
     name: 'pgn',
     plugins: plugins,
+    external: isProduction ? ['react', 'react-dom'] : []
   }).pipe(source("index.js"))
     .pipe(gulp.dest("dist"));
 })
