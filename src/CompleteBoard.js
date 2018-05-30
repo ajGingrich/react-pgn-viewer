@@ -132,7 +132,7 @@ class CompleteBoard extends React.Component {
   }
 
   render() {
-    const { blackSquareColour, fen, isDraggable, innerHTML } = this.props
+    const { blackSquareColour, fen, isDraggable, innerHTML, width } = this.props
     const { chess, moves, index, headerInfo, orientation } = this.state
 
     return (
@@ -147,13 +147,13 @@ class CompleteBoard extends React.Component {
             border: '2px solid lightgrey',
           }}
           whiteSquareColour="aliceblue"
-          width={400}
         />
         <BoardFooter
           onFlipBoard={this._handleFlipBoard}
           onNextMove={this._handleNextMove}
           onPreviousMove={this._handlePreviousMove}
           onReset={this._handleReset}
+          width={width}
         />
         <MoveList
           onChangeMove={this._handleChangeMove}

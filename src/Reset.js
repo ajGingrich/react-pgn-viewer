@@ -20,7 +20,7 @@ class Reset extends React.Component {
   render() {
     return (
       <div onClick={this._handleReset}>
-        reset
+        <i class="fa fa-step-backward"></i>
       </div>
     )
   }

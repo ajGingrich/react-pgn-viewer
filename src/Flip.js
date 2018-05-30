@@ -18,9 +18,10 @@ class Flip extends React.Component {
   }
 
   render() {
+    /// rotate this vertically?
     return (
       <div onClick={this._handleFlipBoard}>
-        flip
+        <i class="fa fa-exchange"></i>
       </div>
     )
   }

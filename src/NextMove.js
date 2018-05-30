@@ -20,7 +20,7 @@ class NextMove extends React.Component {
   render() {
     return (
       <div onClick={this._handleNextMove}>
-        forward
+        <i class="fa fa-angle-right"></i>
       </div>
     )
   }

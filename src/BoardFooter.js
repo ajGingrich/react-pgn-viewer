@@ -8,13 +8,15 @@ import Flip from './Flip'
 class BoardFooter extends React.Component {
 
   render() {
-    const { onNextMove, onPreviousMove, onReset, onFlipBoard } = this.props
+    const { onNextMove, onPreviousMove, onReset, onFlipBoard, width } = this.props
+    console.log(width, 'width')
 
     const footerStyles = {
       cursor: 'pointer',
       display: 'flex',
       flexDirection: 'row',
-      // justifyContent: 'center'
+      justifyContent: 'center',
+      width: width
     }
 
     return (

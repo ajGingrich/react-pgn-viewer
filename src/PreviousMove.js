@@ -20,7 +20,7 @@ class PreviousMove extends React.Component {
   render() {
     return (
       <div onClick={this._handlePreviousMove}>
-        backward
+        <i class="fa fa-angle-left"></i>
       </div>
     )
   }
