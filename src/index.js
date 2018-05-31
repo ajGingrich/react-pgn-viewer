@@ -32,7 +32,7 @@ class PgnViewer extends React.Component {
   }
 
   setPgn(pgns) {
-    const { children, blackSquareColour, fen, isDraggable, orientation, width } = this.props
+    const { children, blackSquareColour, fen, isDraggable, orientation, width, backgroundColor } = this.props
     const nodes = ReactDOM.findDOMNode(this).querySelectorAll('pgn')
 
     // define a const or funciton or something para no usar esta dos veces
@@ -44,6 +44,7 @@ class PgnViewer extends React.Component {
         isDraggable={isDraggable}
         orientation={orientation}
         width={width}
+        backgroundColor={backgroundColor}
       />, nodes[i])
     }
   }
@@ -69,7 +70,16 @@ class PgnViewer extends React.Component {
   }
 
   render() {
-    const { blackSquareColour, fen, isDraggable, orientation, children, innerHTML, width } = this.props
+    const {
+      blackSquareColour,
+      fen,
+      isDraggable,
+      orientation,
+      children,
+      innerHTML,
+      width,
+      backgroundColor,
+    } = this.props
 
     return (
       <div>
@@ -83,6 +93,7 @@ class PgnViewer extends React.Component {
               width={width}
               isDraggable={isDraggable}
               orientation={orientation}
+              backgroundColor={backgroundColor}
             />
           </div>
         }
@@ -92,6 +103,7 @@ class PgnViewer extends React.Component {
 }
 
 PgnViewer.propTypes = {
+  backgroundColor: PropTypes.string,
   blackSquareColour: PropTypes.string,
   fen:PropTypes.string,
   isDraggable: PropTypes.bool,
@@ -103,6 +115,7 @@ PgnViewer.propTypes = {
 
 PgnViewer.defaultProps = {
   width: 600,
+  backgroundColor: '#e1e5ed',
 }
 
 export default PgnViewer

@@ -20,7 +20,7 @@ class Reset extends React.Component {
   render() {
     return (
       <div onClick={this._handleReset} style={this.props.iconStyles}>
-        <i className="fa fa-step-backward"></i>
+        <i className="fa fa-step-backward fa-lg"></i>
       </div>
     )
   }

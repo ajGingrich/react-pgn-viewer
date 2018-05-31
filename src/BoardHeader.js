@@ -8,7 +8,7 @@ class BoardHeader extends React.Component {
     if(!headerInfo) return null
 
     const pgnHeaderStyles = {
-      marginTop: '5px',
+      padding: '5px',
     }
 
     return (

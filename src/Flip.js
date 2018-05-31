@@ -18,11 +18,13 @@ class Flip extends React.Component {
   }
 
   render() {
-    /// rotate this vertically
+    const { iconStyles } = this.props
+    const flipIconStyles = JSON.parse(JSON.stringify(iconStyles))
+    // flipIconStyles.transform = 'rotate(90deg)'
 
     return (
-      <div onClick={this._handleFlipBoard} style={this.props.iconStyles}>
-        <i className="fa fa-exchange"></i>
+      <div onClick={this._handleFlipBoard} style={flipIconStyles}>
+        <i className="fa fa-exchange fa-lg fa-rotate-90"></i>
       </div>
     )
   }

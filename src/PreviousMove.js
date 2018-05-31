@@ -20,7 +20,7 @@ class PreviousMove extends React.Component {
   render() {
     return (
       <div onClick={this._handlePreviousMove} style={this.props.iconStyles}>
-        <i className="fa fa-angle-left"></i>
+        <i className="fa fa-angle-left fa-2x"></i>
       </div>
     )
   }

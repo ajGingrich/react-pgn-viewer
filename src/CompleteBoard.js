@@ -132,16 +132,20 @@ class CompleteBoard extends React.Component {
   }
 
   render() {
-    const { blackSquareColour, fen, isDraggable, innerHTML, width } = this.props
+    const { blackSquareColour, fen, isDraggable, innerHTML, width, backgroundColor } = this.props
     const { chess, moves, index, headerInfo, orientation } = this.state
 
     const pgnViewerMainStyles = {
       display: "flex",
+      justifyContent: "center",
+      flexDirection: "row",
     }
 
     const pgnWrapperStyles = {
-      border: 'solid',
-      width: width
+      width: width,
+      background: backgroundColor,
+
+      //change these to accept props
     }
 
     return (

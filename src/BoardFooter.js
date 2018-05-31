@@ -16,8 +16,8 @@ class BoardFooter extends React.Component {
       flexDirection: 'row',
       justifyContent: 'center',
       width: width,
-      marginTop: '10px',
-      marginBottom: '10px'
+      paddingTop: '10px',
+      paddingBottom: '5px'
     }
 
     const iconStyles = {
