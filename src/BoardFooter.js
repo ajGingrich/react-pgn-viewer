@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Download from './Download'
 import PreviousMove from './PreviousMove'
 import NextMove from './NextMove'
 import Reset from './Reset'
@@ -8,7 +9,7 @@ import Flip from './Flip'
 class BoardFooter extends React.Component {
 
   render() {
-    const { onNextMove, onPreviousMove, onReset, onFlipBoard, width } = this.props
+    const { onDownload, onNextMove, onPreviousMove, onReset, onFlipBoard, width } = this.props
 
     const footerStyles = {
       cursor: 'pointer',
@@ -26,6 +27,7 @@ class BoardFooter extends React.Component {
 
     return (
       <div style={footerStyles}>
+        <Download onDownload={onDownload} iconStyles={iconStyles} />
         <Flip onFlipBoard={onFlipBoard} iconStyles={iconStyles} />
         <Reset onReset={onReset} iconStyles={iconStyles} />
         <PreviousMove onPreviousMove={onPreviousMove} iconStyles={iconStyles} />

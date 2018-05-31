@@ -20,13 +20,17 @@ class App extends React.Component {
   }
 
   render() {
-    const headerStyle = {
+    const headerStyles = {
       color: '#18003f'
     }
 
+    const pageStyles = {
+      textAlign: 'center'
+    }
+
     return (
-      <div>
-        <h2 style={headerStyle}>React Pgn Viewer</h2>
+      <div style={pageStyles}>
+        <h2 style={headerStyles}>React Pgn Viewer</h2>
         <PgnViewer
           blackSquareColour="steelblue"
           isDraggable={true}

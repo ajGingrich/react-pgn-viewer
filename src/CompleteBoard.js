@@ -15,6 +15,7 @@ class CompleteBoard extends React.Component {
     this._handleReset = this._handleReset.bind(this);
     this._handleChangeMove = this._handleChangeMove.bind(this);
     this._handleFlipBoard = this._handleFlipBoard.bind(this);
+    this._handleDownload = this._handleDownload.bind(this);
 
     this.state = {
       chess: null,
@@ -102,6 +103,18 @@ class CompleteBoard extends React.Component {
     })
   }
 
+  _handleDownload() {
+    const { pgnInformation } = this.props
+
+
+    // var file = new Blob([document.getElementById('myInput').value], {type: 'text/plain'});
+    const element = document.createElement("a")
+    const file = new Blob(pgnInformation, {type: 'text/plain'})
+    element.href = URL.createObjectURL(file);
+    element.download = "myFile.txt"; // change name to relevant text
+    element.click();
+  }
+
   componentDidMount() {
     const { pgnInformation } = this.props
     const chess = new Chess.Chess() // this ain't good
@@ -144,8 +157,6 @@ class CompleteBoard extends React.Component {
     const pgnWrapperStyles = {
       width: width,
       background: backgroundColor,
-
-      //change these to accept props
     }
 
     return (
@@ -171,6 +182,7 @@ class CompleteBoard extends React.Component {
           />
         </div>
         <BoardFooter
+          onDownload={this._handleDownload}
           onFlipBoard={this._handleFlipBoard}
           onNextMove={this._handleNextMove}
           onPreviousMove={this._handlePreviousMove}
