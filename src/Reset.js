@@ -19,8 +19,8 @@ class Reset extends React.Component {
 
   render() {
     return (
-      <div onClick={this._handleReset}>
-        <i class="fa fa-step-backward"></i>
+      <div onClick={this._handleReset} style={this.props.iconStyles}>
+        <i className="fa fa-step-backward"></i>
       </div>
     )
   }

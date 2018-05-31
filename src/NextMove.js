@@ -19,8 +19,8 @@ class NextMove extends React.Component {
 
   render() {
     return (
-      <div onClick={this._handleNextMove}>
-        <i class="fa fa-angle-right"></i>
+      <div onClick={this._handleNextMove} style={this.props.iconStyles}>
+        <i className="fa fa-angle-right"></i>
       </div>
     )
   }

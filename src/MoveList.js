@@ -4,12 +4,20 @@ import Move from './Move'
 
 class MoveList extends React.Component {
   render() {
-    const { moves, currentIndex, onChangeMove } = this.props
+    const { moves, currentIndex, onChangeMove, width } = this.props
 
     if(!moves) return null
 
+    const pgnViewerMoveListStyles = {
+      width: 200,
+      paddingLeft: '10px',
+      paddingRight: '5px',
+      fontSize: '14px',
+      lineHeight: '20px',
+    }
+
     return (
-      <p>
+      <div className="pgnViewerMoveList" style={pgnViewerMoveListStyles}>
         {
           moves.map(((move, index) => {
             return (
@@ -23,7 +31,7 @@ class MoveList extends React.Component {
             )
           }))
         }
-      </p>
+      </div>
     )
   }
 }

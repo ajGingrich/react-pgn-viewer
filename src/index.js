@@ -102,7 +102,7 @@ PgnViewer.propTypes = {
 }
 
 PgnViewer.defaultProps = {
-  width: 400,
+  width: 600,
 }
 
 export default PgnViewer

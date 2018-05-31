@@ -135,30 +135,43 @@ class CompleteBoard extends React.Component {
     const { blackSquareColour, fen, isDraggable, innerHTML, width } = this.props
     const { chess, moves, index, headerInfo, orientation } = this.state
 
+    const pgnViewerMainStyles = {
+      display: "flex",
+    }
+
+    const pgnWrapperStyles = {
+      border: 'solid',
+      width: width
+    }
+
     return (
-      <div>
-        <BoardHeader headerInfo={headerInfo && headerInfo}/>
-        <Chessboard
-          blackSquareColour={blackSquareColour}
-          fen={chess && chess.fen() || 'start'}
-          isDraggable={isDraggable}
-          orientation={orientation}
-          style={{
-            border: '2px solid lightgrey',
-          }}
-          whiteSquareColour="aliceblue"
-        />
+      <div className="pgnWrapper" style={pgnWrapperStyles}>
+        <BoardHeader headerInfo={headerInfo && headerInfo} width={width} />
+        <div className="pgnViewerMain" style={pgnViewerMainStyles}>
+          <Chessboard
+            blackSquareColour={blackSquareColour}
+            fen={chess && chess.fen() || 'start'}
+            isDraggable={isDraggable}
+            orientation={orientation}
+            style={{
+              border: '2px solid lightgrey',
+            }}
+            whiteSquareColour="aliceblue"
+            width={(2/3)*width}
+          />
+          <MoveList
+            onChangeMove={this._handleChangeMove}
+            currentIndex={index}
+            moves={moves}
+            width={(1/3)*width}
+          />
+        </div>
         <BoardFooter
           onFlipBoard={this._handleFlipBoard}
           onNextMove={this._handleNextMove}
           onPreviousMove={this._handlePreviousMove}
           onReset={this._handleReset}
           width={width}
-        />
-        <MoveList
-          onChangeMove={this._handleChangeMove}
-          currentIndex={index}
-          moves={moves}
         />
       </div>
     )

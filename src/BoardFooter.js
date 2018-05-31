@@ -9,22 +9,27 @@ class BoardFooter extends React.Component {
 
   render() {
     const { onNextMove, onPreviousMove, onReset, onFlipBoard, width } = this.props
-    console.log(width, 'width')
 
     const footerStyles = {
       cursor: 'pointer',
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'center',
-      width: width
+      width: width,
+      marginTop: '10px',
+      marginBottom: '10px'
+    }
+
+    const iconStyles = {
+      paddingRight: "20px",
     }
 
     return (
       <div style={footerStyles}>
-        <Flip onFlipBoard={onFlipBoard} />
-        <Reset onReset={onReset} />
-        <PreviousMove onPreviousMove={onPreviousMove} />
-        <NextMove onNextMove={onNextMove}/>
+        <Flip onFlipBoard={onFlipBoard} iconStyles={iconStyles} />
+        <Reset onReset={onReset} iconStyles={iconStyles} />
+        <PreviousMove onPreviousMove={onPreviousMove} iconStyles={iconStyles} />
+        <NextMove onNextMove={onNextMove} iconStyles={iconStyles} />
       </div>
     )
   }

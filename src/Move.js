@@ -23,7 +23,8 @@ class Move extends React.Component {
 
     let moveStyles = {
       cursor: 'pointer',
-      color: 'black'
+      color: 'black',
+      display: 'inline-block',
     }
 
     if (currentIndex === moveIndex) {
