@@ -26,4 +26,9 @@ class PreviousMove extends React.Component {
   }
 }
 
+PreviousMove.propTypes = {
+  onPreviousMove: PropTypes.func.isRequired,
+  iconStyles: PropTypes.object.isRequired,
+}
+
 export default PreviousMove

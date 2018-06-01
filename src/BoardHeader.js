@@ -20,4 +20,9 @@ class BoardHeader extends React.Component {
   }
 }
 
+BoardHeader.propTypes = {
+  headerInfo: PropTypes.object.isRequired,
+}
+
+
 export default BoardHeader

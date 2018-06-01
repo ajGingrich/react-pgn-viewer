@@ -26,5 +26,9 @@ class Reset extends React.Component {
   }
 }
 
-//proptypes
+Reset.propTypes = {
+  onReset: PropTypes.func.isRequired,
+  iconStyles: PropTypes.object.isRequired,
+}
+
 export default Reset

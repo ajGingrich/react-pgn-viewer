@@ -32,11 +32,11 @@ class PgnViewer extends React.Component {
   }
 
   setPgn(pgns) {
-    const { children, blackSquareColour, fen, isDraggable, orientation, width, backgroundColor } = this.props
+    const { blackSquareColour, fen, isDraggable, orientation, width, backgroundColor } = this.props
     const nodes = ReactDOM.findDOMNode(this).querySelectorAll('pgn')
 
-    // define a const or funciton or something para no usar esta dos veces
-    for(let i=0; i<nodes.length; i++) {
+    // define a const or function or something para no usar esta dos veces
+    for(let i=0;i<nodes.length;i++) {
       ReactDOM.render(<CompleteBoard
         pgnInformation={pgns[i]}
         blackSquareColour={blackSquareColour}
@@ -51,9 +51,9 @@ class PgnViewer extends React.Component {
 
   componentDidMount() {
     const nodes = ReactDOM.findDOMNode(this).querySelectorAll('pgn')
-    let pgns = []
+    const pgns = []
 
-    for(let i=0; i < nodes.length; i++) {
+    for(let i=0;i < nodes.length;i++) {
       pgns.push(nodes[i].innerHTML.slice(0))
     }
 

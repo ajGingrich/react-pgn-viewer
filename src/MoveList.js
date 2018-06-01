@@ -9,7 +9,7 @@ class MoveList extends React.Component {
     if(!moves) return null
 
     const pgnViewerMoveListStyles = {
-      width: 200,
+      width: width,
       paddingLeft: '10px',
       paddingRight: '5px',
       fontSize: '14px',
@@ -19,7 +19,7 @@ class MoveList extends React.Component {
     return (
       <div className="pgnViewerMoveList" style={pgnViewerMoveListStyles}>
         {
-          moves.map(((move, index) => {
+          moves.map((move, index) => {
             return (
               <Move
                 onChangeMove={onChangeMove}
@@ -29,11 +29,18 @@ class MoveList extends React.Component {
                 moveIndex={index+1}
               />
             )
-          }))
+          })
         }
       </div>
     )
   }
+}
+
+MoveList.propTypes = {
+  currentIndex: PropTypes.number,
+  moves: PropTypes.array,
+  onChangeMove: PropTypes.func.isRequired,
+  width: PropTypes.number.isRequired,
 }
 
 export default MoveList

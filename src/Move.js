@@ -21,7 +21,7 @@ class Move extends React.Component {
     const isWhiteMove = moveIndex % 2 !== 0
     const whiteMoveNumber = Math.ceil(moveIndex/2) + '.'
 
-    let moveStyles = {
+    const moveStyles = {
       cursor: 'pointer',
       color: 'black',
       display: 'inline-block',
@@ -37,6 +37,13 @@ class Move extends React.Component {
       </span>
     )
   }
+}
+
+Move.propTypes = {
+  currentIndex: PropTypes.number,
+  moveIndex: PropTypes.number,
+  move: PropTypes.string,
+  onChangeMove: PropTypes.func.isRequired,
 }
 
 export default Move

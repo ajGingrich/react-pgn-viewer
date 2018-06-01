@@ -30,4 +30,9 @@ class Flip extends React.Component {
   }
 }
 
+Flip.propTypes = {
+  onFlipBoard: PropTypes.func.isRequired,
+  iconStyles: PropTypes.object.isRequired,
+}
+
 export default Flip

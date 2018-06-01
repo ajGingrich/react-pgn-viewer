@@ -26,5 +26,9 @@ class NextMove extends React.Component {
   }
 }
 
-//proptypes
+NextMove.propTypes = {
+  onNextMove: PropTypes.func.isRequired,
+  iconStyles: PropTypes.object.isRequired,
+}
+
 export default NextMove

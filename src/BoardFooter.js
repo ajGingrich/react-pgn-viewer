@@ -23,7 +23,7 @@ class BoardFooter extends React.Component {
     }
 
     const iconStyles = {
-      paddingRight: "20px",
+      paddingRight: '20px',
     }
 
     return (
@@ -37,6 +37,16 @@ class BoardFooter extends React.Component {
       </div>
     )
   }
+}
+
+BoardFooter.propTypes = {
+  onDownload: PropTypes.func.isRequired,
+  onNextMove: PropTypes.func.isRequired,
+  onPreviousMove: PropTypes.func.isRequired,
+  onReset: PropTypes.func.isRequired,
+  onFlipBoard: PropTypes.func.isRequired,
+  onLastMove: PropTypes.func.isRequired,
+  width: PropTypes.number,
 }
 
 export default BoardFooter

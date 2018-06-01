@@ -26,5 +26,9 @@ class LastMove extends React.Component {
   }
 }
 
-//proptypes
+LastMove.propTypes = {
+  onLastMove: PropTypes.func.isRequired,
+  iconStyles: PropTypes.object.isRequired,
+}
+
 export default LastMove

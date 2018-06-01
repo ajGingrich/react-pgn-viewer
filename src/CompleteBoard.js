@@ -76,7 +76,7 @@ class CompleteBoard extends React.Component {
     const { chess, moves, index: currentIndex } = this.state
     let temporaryIndex = new Number(currentIndex)
 
-    for(let i=0; i < moves.length; i++) {
+    for(let i=0;i < moves.length;i++) {
       chess.move(moves[temporaryIndex])
       // don't mutate state but make copy and set new one...
       temporaryIndex++
@@ -103,12 +103,12 @@ class CompleteBoard extends React.Component {
     if (moveIndex === currentIndex) return
 
     if (moveIndex < currentIndex) {
-      for (let i=0; i < (currentIndex - moveIndex); i++) {
+      for (let i=0;i < (currentIndex - moveIndex);i++) {
         chess.undo()
       }
     } else if (moveIndex > currentIndex) {
       let temporaryIndex = new Number(currentIndex)
-      for (let i=0; i < (moveIndex - currentIndex); i++) {
+      for (let i=0;i < (moveIndex - currentIndex);i++) {
         chess.move(moves[temporaryIndex])
         temporaryIndex++
       }
@@ -122,7 +122,7 @@ class CompleteBoard extends React.Component {
 
   _handleDownload() {
     const { headerInfo } = this.state
-    const element = document.createElement("a")
+    const element = document.createElement('a')
     const file = new Blob([this.props.pgnInformation], {type: 'text/plain'})
     const whiteLastName = headerInfo.White.split(' ')[1]
     const blackLastName = headerInfo.Black.split(' ')[1]
@@ -144,7 +144,7 @@ class CompleteBoard extends React.Component {
 
     chess.load_pgn(pgnArray[pgnArray.length - 1])
 
-    for (let i=0; i < pgnArray.length - 2; i++) {
+    for (let i=0;i < pgnArray.length - 2;i++) {
       const headerInfo = pgnArray[i].trim().split(' "')
       chess.header(headerInfo[0].replace(/\"/g, ''), headerInfo[1].replace(/\"/g, ''))
     }
@@ -162,13 +162,13 @@ class CompleteBoard extends React.Component {
   }
 
   render() {
-    const { blackSquareColour, fen, isDraggable, innerHTML, width, backgroundColor } = this.props
+    const { blackSquareColour, isDraggable, width, backgroundColor } = this.props
     const { chess, moves, index, headerInfo, orientation } = this.state
 
     const pgnViewerMainStyles = {
-      display: "flex",
-      justifyContent: "center",
-      flexDirection: "row",
+      display: 'flex',
+      justifyContent: 'center',
+      flexDirection: 'row',
     }
 
     const pgnWrapperStyles = {
@@ -178,7 +178,7 @@ class CompleteBoard extends React.Component {
 
     return (
       <div className="pgnWrapper" style={pgnWrapperStyles}>
-        <BoardHeader headerInfo={headerInfo && headerInfo} width={width} />
+        {headerInfo && <BoardHeader headerInfo={headerInfo} width={width} />}
         <div className="pgnViewerMain" style={pgnViewerMainStyles}>
           <Chessboard
             blackSquareColour={blackSquareColour}
@@ -210,6 +210,14 @@ class CompleteBoard extends React.Component {
       </div>
     )
   }
+}
+
+CompleteBoard.propTypes = {
+  backgroundColor: PropTypes.string,
+  blackSquareColour: PropTypes.string,
+  pgnInformation: PropTypes.string.isRequired,
+  isDraggable: PropTypes.bool,
+  width: PropTypes.number
 }
 
 export default CompleteBoard

@@ -26,5 +26,9 @@ class Download extends React.Component {
   }
 }
 
-//proptypes
+Download.propTypes = {
+  onDownload: PropTypes.func.isRequired,
+  iconStyles: PropTypes.object.isRequired,
+}
+
 export default Download
