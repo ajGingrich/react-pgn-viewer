@@ -1,0 +1,42 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "plugins": [
+      "react"
+    ],
+    "rules": {
+        "camelcase": "error",
+        "comma-spacing": ["error", { "before": false, "after": true }],
+        "curly": ["error", "multi-line"],
+        "eqeqeq": ["error", "always"],
+        "no-compare-neg-zero": "error",
+        "no-cond-assign": ["error", "always"],
+        "no-confusing-arrow": ["error", {"allowParens": true}],
+        "no-console": "error",
+        "no-const-assign": "error",
+        "no-constant-condition": "error",
+        "no-extra-parens": ["error", "all", { "nestedBinaryExpressions": false }],
+        "no-empty": "error",
+        "no-multi-spaces": "error",
+        "no-global-assign": "error",
+        "no-param-reassign": "error",
+        "no-trailing-spaces": [2, { "skipBlankLines": true }],
+        "no-unreachable": 2,
+        "no-unused-vars": "error",
+        "no-useless-constructor": "error",
+        "no-var": "error",
+        "prefer-const": ["error", { "destructuring": "any","ignoreReadBeforeAssign": false }],
+        "quotes": ["error", "single"],
+        "react/jsx-uses-vars": "error",
+        "react/jsx-uses-react": "error",
+        "semi-spacing": ["error", {"before": false, "after": false}],
+        "valid-typeof": "error"
+    },
+    "env": {},
+    "parser": "babel-eslint"
+}

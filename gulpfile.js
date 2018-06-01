@@ -1,3 +1,4 @@
+/* eslint-disable */
 var gulp = require("gulp")
 var rollup = require('rollup-stream')
 var source = require('vinyl-source-stream')
