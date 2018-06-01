@@ -10,12 +10,13 @@ class CompleteBoard extends React.Component {
   constructor(props) {
     super(props)
 
-    this._handleNextMove = this._handleNextMove.bind(this);
-    this._handlePreviousMove = this._handlePreviousMove.bind(this);
-    this._handleReset = this._handleReset.bind(this);
-    this._handleChangeMove = this._handleChangeMove.bind(this);
-    this._handleFlipBoard = this._handleFlipBoard.bind(this);
-    this._handleDownload = this._handleDownload.bind(this);
+    this._handleNextMove = this._handleNextMove.bind(this)
+    this._handlePreviousMove = this._handlePreviousMove.bind(this)
+    this._handleReset = this._handleReset.bind(this)
+    this._handleChangeMove = this._handleChangeMove.bind(this)
+    this._handleFlipBoard = this._handleFlipBoard.bind(this)
+    this._handleDownload = this._handleDownload.bind(this)
+    this._handleLastMove = this._handleLastMove.bind(this)
 
     this.state = {
       chess: null,
@@ -71,6 +72,22 @@ class CompleteBoard extends React.Component {
     })
   }
 
+  _handleLastMove() {
+    const { chess, moves, index: currentIndex } = this.state
+    let temporaryIndex = new Number(currentIndex)
+
+    for(let i=0; i < moves.length; i++) {
+      chess.move(moves[temporaryIndex])
+      // don't mutate state but make copy and set new one...
+      temporaryIndex++
+    }
+
+    this.setState({
+      chess: chess,
+      index: temporaryIndex,
+    })
+  }
+
   _handleFlipBoard() {
     const newOrientation = this.state.orientation === 'w' ? 'b': 'w'
 
@@ -104,15 +121,15 @@ class CompleteBoard extends React.Component {
   }
 
   _handleDownload() {
-    const { pgnInformation } = this.props
-
-
-    // var file = new Blob([document.getElementById('myInput').value], {type: 'text/plain'});
+    const { headerInfo } = this.state
     const element = document.createElement("a")
-    const file = new Blob(pgnInformation, {type: 'text/plain'})
-    element.href = URL.createObjectURL(file);
-    element.download = "myFile.txt"; // change name to relevant text
-    element.click();
+    const file = new Blob([this.props.pgnInformation], {type: 'text/plain'})
+    const whiteLastName = headerInfo.White.split(' ')[1]
+    const blackLastName = headerInfo.Black.split(' ')[1]
+
+    element.href = URL.createObjectURL(file)
+    element.download = `${whiteLastName}vs${blackLastName}${headerInfo.EventDate}.pgn`
+    element.click()
   }
 
   componentDidMount() {
@@ -187,6 +204,7 @@ class CompleteBoard extends React.Component {
           onNextMove={this._handleNextMove}
           onPreviousMove={this._handlePreviousMove}
           onReset={this._handleReset}
+          onLastMove={this._handleLastMove}
           width={width}
         />
       </div>
