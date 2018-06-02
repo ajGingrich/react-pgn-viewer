@@ -3,13 +3,7 @@ import PropTypes from 'prop-types'
 
 class LastMove extends React.Component {
 
-  constructor(props) {
-    super(props)
-
-    this._handleLastMove = this._handleLastMove.bind(this);
-  }
-
-  _handleLastMove() {
+  _handleLastMove = () => {
     const { onLastMove } = this.props
 
     if(typeof onLastMove !== 'function') return

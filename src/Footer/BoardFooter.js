@@ -6,11 +6,12 @@ import NextMove from './NextMove'
 import LastMove from './LastMove'
 import Reset from './Reset'
 import Flip from './Flip'
+import Play from './Play'
 
 class BoardFooter extends React.Component {
 
   render() {
-    const { onDownload, onNextMove, onPreviousMove, onReset, onFlipBoard, width, onLastMove } = this.props
+    const { onDownload, onNextMove, onPreviousMove, onReset, onFlipBoard, width, onLastMove, onPlay } = this.props
 
     const footerStyles = {
       cursor: 'pointer',
@@ -34,6 +35,7 @@ class BoardFooter extends React.Component {
         <PreviousMove onPreviousMove={onPreviousMove} iconStyles={iconStyles} />
         <NextMove onNextMove={onNextMove} iconStyles={iconStyles} />
         <LastMove onLastMove={onLastMove} iconStyles={iconStyles} />
+        <Play onPlay={onPlay} iconStyles={iconStyles} />
       </div>
     )
   }
@@ -43,6 +45,7 @@ BoardFooter.propTypes = {
   onDownload: PropTypes.func.isRequired,
   onNextMove: PropTypes.func.isRequired,
   onPreviousMove: PropTypes.func.isRequired,
+  onPlay: PropTypes.func.isRequired,
   onReset: PropTypes.func.isRequired,
   onFlipBoard: PropTypes.func.isRequired,
   onLastMove: PropTypes.func.isRequired,

@@ -2,13 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 class Move extends React.Component {
-  constructor(props) {
-    super(props)
 
-    this._handleChangeMove = this._handleChangeMove.bind(this);
-  }
-
-  _handleChangeMove() {
+  _handleChangeMove = () => {
     const { onChangeMove, moveIndex } = this.props
 
     if(typeof onChangeMove !== 'function') return

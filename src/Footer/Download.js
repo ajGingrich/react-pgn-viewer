@@ -3,13 +3,7 @@ import PropTypes from 'prop-types'
 
 class Download extends React.Component {
 
-  constructor(props) {
-    super(props)
-
-    this._handleDownload = this._handleDownload.bind(this);
-  }
-
-  _handleDownload() {
+  _handleDownload = () => {
     const { onDownload } = this.props
 
     if(typeof onDownload !== 'function') return
