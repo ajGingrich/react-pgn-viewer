@@ -21,24 +21,23 @@ class CompleteBoard extends React.Component {
   }
 
   _handleNextMove = () => {
-    const { moves, chess, isPlaying } = this.state
-    let { index } = this.state
+    const { moves, chess, index: currentIndex } = this.state
+    let index = new Number(currentIndex)
 
-    if(index >= moves.length || !isPlaying) return //dont do this
+    console.log(chess)
+
+    if(index >= moves.length) return
 
     chess.move(moves[index])
     // don't mutate state but make copy and set new one...
     index++
 
-    this.setState({
-      chess: chess,
-      index: index,
-    })
+    this.setState({ chess: chess, index: index })
   }
 
   _handlePreviousMove = () => {
-    const { chess } = this.state
-    let { index } = this.state
+    const { chess, index: currentIndex } = this.state
+    let index = new Number(currentIndex)
 
     if(!index) return
 
@@ -46,10 +45,7 @@ class CompleteBoard extends React.Component {
     // don't mutate state but make copy and set new one...
     index--
 
-    this.setState({
-      chess: chess,
-      index: index,
-    })
+    this.setState({ chess: chess, index: index })
   }
 
   _handleReset = () => {
@@ -59,66 +55,55 @@ class CompleteBoard extends React.Component {
     chess.reset()
     // don't mutate state but make copy and set new one...
 
-    this.setState({
-      chess: chess,
-      index: index,
-    })
+    this.setState({ chess: chess, index: index })
   }
 
   _handleLastMove = () => {
     const { chess, moves, index: currentIndex } = this.state
-    let temporaryIndex = new Number(currentIndex)
+    let index = new Number(currentIndex)
 
     for(let i=0;i < moves.length;i++) {
-      chess.move(moves[temporaryIndex])
+      chess.move(moves[index])
       // don't mutate state but make copy and set new one...
-      temporaryIndex++
+      index++
     }
 
-    this.setState({
-      chess: chess,
-      index: temporaryIndex,
-    })
+    this.setState({ chess: chess, index: index })
   }
 
   _handleFlipBoard = () => {
-    const newOrientation = this.state.orientation === 'w' ? 'b': 'w'
-
-    this.setState({
-      orientation: newOrientation,
-    })
+    this.setState({ orientation: this.state.orientation === 'w' ? 'b': 'w' })
   }
 
   _handlePlay = () => {
     const { isPlaying } = this.state
 
-    this.setState({
-      isPlaying: !isPlaying
-    })
+    if(!isPlaying) this._handleNextMove()
+
+    this.setState({ isPlaying: !isPlaying })
   }
 
   _handleChangeMove = (moveIndex) => {
     const { moves, chess, index: currentIndex } = this.state
+    let index = new Number(currentIndex)
     // don't mutate state but make copy and set new one...
 
-    if (moveIndex === currentIndex) return
+    if (moveIndex === index) return
 
-    if (moveIndex < currentIndex) {
-      for (let i=0;i < (currentIndex - moveIndex);i++) {
+    if (moveIndex < index) {
+      for (let i=0;i < (index - moveIndex);i++) {
         chess.undo()
       }
-    } else if (moveIndex > currentIndex) {
-      let temporaryIndex = new Number(currentIndex)
-      for (let i=0;i < (moveIndex - currentIndex);i++) {
-        chess.move(moves[temporaryIndex])
-        temporaryIndex++
+    } else if (moveIndex > index) {
+      const moveDifference = moveIndex - index
+
+      for (let i=0;i < moveDifference;i++) {
+        chess.move(moves[index])
+        index++
       }
     }
 
-    this.setState({
-      chess: chess,
-      index: moveIndex,
-    })
+    this.setState({ chess: chess, index: moveIndex })
   }
 
   _handleDownload = () => {
@@ -135,7 +120,7 @@ class CompleteBoard extends React.Component {
 
   componentDidMount() {
     const { pgnInformation } = this.props
-    const chess = new Chess.Chess() // this ain't good
+    const chess = new Chess.Chess()
     const index = 0
     const pgnString = pgnInformation.trim().replace(/\[/g, '')
 
@@ -164,7 +149,9 @@ class CompleteBoard extends React.Component {
 
   componentDidUpdate() {
     if(this.state.isPlaying) {
-      setTimeout(() => this._handleNextMove(), 1000)
+      this.timeoutID = setTimeout(() => this._handleNextMove(), 1000)
+    } else {
+      clearTimeout(this.timeoutID)
     }
   }
 
