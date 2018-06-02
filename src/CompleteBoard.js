@@ -24,12 +24,9 @@ class CompleteBoard extends React.Component {
     const { moves, chess, index: currentIndex } = this.state
     let index = new Number(currentIndex)
 
-    console.log(chess)
-
     if(index >= moves.length) return
 
     chess.move(moves[index])
-    // don't mutate state but make copy and set new one...
     index++
 
     this.setState({ chess: chess, index: index })
@@ -42,7 +39,6 @@ class CompleteBoard extends React.Component {
     if(!index) return
 
     chess.undo()
-    // don't mutate state but make copy and set new one...
     index--
 
     this.setState({ chess: chess, index: index })
@@ -53,7 +49,6 @@ class CompleteBoard extends React.Component {
     const index = 0
 
     chess.reset()
-    // don't mutate state but make copy and set new one...
 
     this.setState({ chess: chess, index: index })
   }
@@ -64,7 +59,6 @@ class CompleteBoard extends React.Component {
 
     for(let i=0;i < moves.length;i++) {
       chess.move(moves[index])
-      // don't mutate state but make copy and set new one...
       index++
     }
 
@@ -86,7 +80,6 @@ class CompleteBoard extends React.Component {
   _handleChangeMove = (moveIndex) => {
     const { moves, chess, index: currentIndex } = this.state
     let index = new Number(currentIndex)
-    // don't mutate state but make copy and set new one...
 
     if (moveIndex === index) return
 
