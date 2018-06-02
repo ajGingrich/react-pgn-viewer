@@ -15,15 +15,16 @@ class CompleteBoard extends React.Component {
       moves: null,
       index: null,
       headerInfo: null,
+      isPlaying: null,
       orientation: this.props.orientation
     }
   }
 
   _handleNextMove = () => {
-    const { moves, chess } = this.state
+    const { moves, chess, isPlaying } = this.state
     let { index } = this.state
 
-    if(index >= moves.length) return
+    if(index >= moves.length || !isPlaying) return //dont do this
 
     chess.move(moves[index])
     // don't mutate state but make copy and set new one...
@@ -89,7 +90,11 @@ class CompleteBoard extends React.Component {
   }
 
   _handlePlay = () => {
-    console.log('playing....')
+    const { isPlaying } = this.state
+
+    this.setState({
+      isPlaying: !isPlaying
+    })
   }
 
   _handleChangeMove = (moveIndex) => {
@@ -157,9 +162,15 @@ class CompleteBoard extends React.Component {
     })
   }
 
+  componentDidUpdate() {
+    if(this.state.isPlaying) {
+      setTimeout(() => this._handleNextMove(), 1000)
+    }
+  }
+
   render() {
     const { blackSquareColour, isDraggable, width, backgroundColor } = this.props
-    const { chess, moves, index, headerInfo, orientation } = this.state
+    const { chess, moves, index, headerInfo, orientation, isPlaying } = this.state
 
     const pgnViewerMainStyles = {
       display: 'flex',
@@ -195,6 +206,7 @@ class CompleteBoard extends React.Component {
           />
         </div>
         <BoardFooter
+          isPlaying={isPlaying}
           onPlay={this._handlePlay}
           onDownload={this._handleDownload}
           onFlipBoard={this._handleFlipBoard}

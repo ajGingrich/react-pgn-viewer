@@ -12,9 +12,11 @@ class Play extends React.Component {
   }
 
   render() {
+    const iconToShow = this.props.isPlaying ? 'fa-pause' : 'fa-play'
+
     return (
       <div onClick={this._handlePlay} style={this.props.iconStyles}>
-        <i className="fa fa-angle-right fa-2x"></i>
+        <i className={`fa ${iconToShow} fa-lg`}></i>
       </div>
     )
   }
@@ -22,6 +24,7 @@ class Play extends React.Component {
 
 Play.propTypes = {
   onPlay: PropTypes.func.isRequired,
+  isPlaying: PropTypes.bool,
   iconStyles: PropTypes.object.isRequired,
 }
 
