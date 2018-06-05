@@ -1,6 +1,6 @@
 {
   "name": "react-pgn-viewer",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "React component for creating an interactive pgn viewer from string",
   "main": "dist/index.js",
   "directories": {

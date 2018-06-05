@@ -59,7 +59,9 @@ class CompleteBoard extends React.Component {
 
     if(index >= moves.length) return
 
-    for(let i=0;i < moves.length;i++) {
+    const moveDifference = moves.length - index
+
+    for(let i=0;i < moveDifference;i++) {
       chess.move(moves[index])
       index++
     }
