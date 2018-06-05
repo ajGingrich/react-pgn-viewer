@@ -36,7 +36,7 @@ class CompleteBoard extends React.Component {
     const { chess, index: currentIndex } = this.state
     let index = new Number(currentIndex)
 
-    if(!index) return
+    if(index <= 0) return
 
     chess.undo()
     index--
@@ -56,6 +56,8 @@ class CompleteBoard extends React.Component {
   _handleLastMove = () => {
     const { chess, moves, index: currentIndex } = this.state
     let index = new Number(currentIndex)
+
+    if(index >= moves.length) return
 
     for(let i=0;i < moves.length;i++) {
       chess.move(moves[index])
@@ -112,6 +114,7 @@ class CompleteBoard extends React.Component {
   }
 
   componentDidMount() {
+    // switch to regex here for header Info
     const { pgnInformation } = this.props
     const chess = new Chess.Chess()
     const index = 0
@@ -151,6 +154,21 @@ class CompleteBoard extends React.Component {
   render() {
     const { blackSquareColour, isDraggable, width, backgroundColor } = this.props
     const { chess, moves, index, headerInfo, orientation, isPlaying } = this.state
+    const isWhiteMove = (index-1) % 2 === 0
+    let activeSquare
+
+    if(moves && index) {
+      switch (moves[index-1]) {
+        case 'O-O':
+          activeSquare = isWhiteMove ? 'g1' : 'g8'
+          break
+        case 'O-O-O':
+          activeSquare = isWhiteMove ? 'c1' : 'c8'
+          break
+        default:
+          activeSquare = moves[index-1].match(/[a-z][1-8]/gm)[0]
+      }
+    }
 
     const pgnViewerMainStyles = {
       display: 'flex',
@@ -172,6 +190,7 @@ class CompleteBoard extends React.Component {
             fen={chess && chess.fen() || 'start'}
             isDraggable={isDraggable}
             orientation={orientation}
+            activeSquare={activeSquare}
             style={{
               border: '2px solid lightgrey',
             }}
