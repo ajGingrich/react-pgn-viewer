@@ -65,7 +65,7 @@ The icons use font-awesome 4 CSS. If you aren't already using that, simply put t
 
 ## Properties
 
-This library uses a fork of [react-chessboardjs](https://github.com/siansell/react-chessboardjs) for the board logic and display. Therefore ,it shares many props in addition to the unique items.
+This library uses a fork of [react-chessboardjs](https://github.com/siansell/react-chessboardjs) for the board logic and display. Therefore, it shares many props in addition to the unique items.
 
 | Prop | Type | Default | Explanation |
 | --- | :---: | :------: | :-------: |

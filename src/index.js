@@ -7,45 +7,50 @@ class PgnViewer extends React.Component {
   constructor(props) {
     super(props)
 
-    this.createInnerHtml = this.createInnerHtml.bind(this)
-    this.setPgn = this.setPgn.bind(this)
-    this.additionalHTMLModification = this.additionalHTMLModification.bind(this)
-
-    //save fens in state? in case of updating
     this.state = { pgns: null }
   }
 
-  createInnerHtml() {
+  makeViewer = ({ pgnInformation }) => {
+    const {
+      blackSquareColour,
+      isDraggable,
+      orientation,
+      width,
+      backgroundColor,
+    } = this.props
+
+    return (
+      <CompleteBoard
+        pgnInformation={pgnInformation}
+        blackSquareColour={blackSquareColour}
+        width={width}
+        isDraggable={isDraggable}
+        orientation={orientation}
+        backgroundColor={backgroundColor}
+      />
+    )
+  }
+
+  createInnerHtml = () => {
     return {__html: this.props.children};
   }
 
-  additionalHTMLModification() {
-    //add support for multiple nodes/functions?
+  additionalHTMLModification = () => {
     const { nodeToModify, nodeModification } = this.props
     const nodes = ReactDOM.findDOMNode(this).querySelectorAll(nodeToModify)
 
     if(typeof nodeModification !== 'function' || !nodeToModify) return null
 
-    for (let i = 0; i < nodes.length; i++) { //eslint-disable-line
+    for (let i = 0;i < nodes.length;i++) {
         nodeModification(nodes[i])
     }
   }
 
-  setPgn(pgns) {
-    const { blackSquareColour, fen, isDraggable, orientation, width, backgroundColor } = this.props
+  setPgn = (pgns) => {
     const nodes = ReactDOM.findDOMNode(this).querySelectorAll('pgn')
 
-    // define a const or function or something para no usar esta dos veces
     for(let i=0;i<nodes.length;i++) {
-      ReactDOM.render(<CompleteBoard
-        pgnInformation={pgns[i]}
-        blackSquareColour={blackSquareColour}
-        fen={fen}
-        isDraggable={isDraggable}
-        orientation={orientation}
-        width={width}
-        backgroundColor={backgroundColor}
-      />, nodes[i])
+      ReactDOM.render(this.makeViewer({ pgnInformation: pgns[i] }), nodes[i])
     }
   }
 
@@ -64,22 +69,12 @@ class PgnViewer extends React.Component {
   }
 
   componentDidUpdate() {
-    // extra components in react dev tools?!
     this.additionalHTMLModification()
     this.setPgn(this.state.pgns)
   }
 
   render() {
-    const {
-      blackSquareColour,
-      fen,
-      isDraggable,
-      orientation,
-      children,
-      innerHTML,
-      width,
-      backgroundColor,
-    } = this.props
+    const { innerHTML, children } = this.props
 
     const pgnStyles = {
       display: 'flex',
@@ -89,19 +84,7 @@ class PgnViewer extends React.Component {
     return (
       <div style={pgnStyles}>
         {innerHTML && <div dangerouslySetInnerHTML={this.createInnerHtml()}></div>}
-        {!innerHTML &&
-          <div>
-            <CompleteBoard
-              children={children}
-              blackSquareColour={blackSquareColour}
-              fen={fen}
-              width={width}
-              isDraggable={isDraggable}
-              orientation={orientation}
-              backgroundColor={backgroundColor}
-            />
-          </div>
-        }
+        {!innerHTML && <div>{this.makeViewer({ pgnInformation: children })}</div>}
       </div>
     )
   }
@@ -110,17 +93,23 @@ class PgnViewer extends React.Component {
 PgnViewer.propTypes = {
   backgroundColor: PropTypes.string,
   blackSquareColour: PropTypes.string,
-  fen:PropTypes.string,
   isDraggable: PropTypes.bool,
   nodeToModify: PropTypes.string,
   nodeModification: PropTypes.func,
   orientation: PropTypes.string,
+  showCoordinates: PropTypes.bool,
+  whiteSquareColour: PropTypes.string,
   width: PropTypes.number,
 }
 
 PgnViewer.defaultProps = {
-  width: 600,
   backgroundColor: '#e1e5ed',
+  blackSquareColour: 'black',
+  isDraggable: true,
+  orientation: 'w',
+  showCoordinates: true,
+  whiteSquareColour: 'white',
+  width: 600,
 }
 
 export default PgnViewer
