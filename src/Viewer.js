@@ -6,7 +6,7 @@ import BoardHeader from './BoardHeader'
 import BoardFooter from './Footer/BoardFooter'
 import MoveList from './Moves/MoveList'
 
-class CompleteBoard extends React.Component {
+class Viewer extends React.Component {
   constructor(props) {
     super(props)
 
@@ -154,7 +154,7 @@ class CompleteBoard extends React.Component {
   }
 
   render() {
-    const { blackSquareColour, isDraggable, width, backgroundColor } = this.props
+    const { blackSquareColor, whiteSquareColor, isDraggable, width, backgroundColor, showCoordinates } = this.props
     const { chess, moves, index, headerInfo, orientation, isPlaying } = this.state
     const isWhiteMove = (index-1) % 2 === 0
     let activeSquare
@@ -188,15 +188,16 @@ class CompleteBoard extends React.Component {
         {headerInfo && <BoardHeader headerInfo={headerInfo} width={width} />}
         <div className="pgnViewerMain" style={pgnViewerMainStyles}>
           <Chessboard
-            blackSquareColour={blackSquareColour}
+            blackSquareColour={blackSquareColor}
             fen={chess && chess.fen() || 'start'}
             isDraggable={isDraggable}
             orientation={orientation}
+            showCoordinates={showCoordinates}
             activeSquare={activeSquare}
             style={{
               border: '2px solid lightgrey',
             }}
-            whiteSquareColour="aliceblue"
+            whiteSquareColour={whiteSquareColor}
             width={(2/3)*width}
           />
           <MoveList
@@ -222,7 +223,7 @@ class CompleteBoard extends React.Component {
   }
 }
 
-CompleteBoard.propTypes = {
+Viewer.propTypes = {
   backgroundColor: PropTypes.string,
   blackSquareColour: PropTypes.string,
   pgnInformation: PropTypes.string.isRequired,
@@ -230,4 +231,4 @@ CompleteBoard.propTypes = {
   width: PropTypes.number
 }
 
-export default CompleteBoard
+export default Viewer

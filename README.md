@@ -72,9 +72,9 @@ This library uses a fork of [react-chessboardjs](https://github.com/siansell/rea
 | innerHTML | boolean | true | if true, will parse the pgn elements. If false, will make only one pgn from a text string |
 | nodeToModify | string | N/A | HTML element that should be modified by `nodeModification`. *Only applicable if innerHTML is true.* |
 | nodeModification | function | N/A | instructions for modify different HTML elements besides `<pgn>`. *Only applicable if innerHTML is true.* |
-| backgroundColor | string | green | background of the entire viewer |
-| blackSquareColor | string | green | color of the dark squares |
-| whiteSquareColor | string | '#f0d9b5' | color of the light squares |
+| backgroundColor | string | #e1e5ed | background of the entire viewer |
+| blackSquareColor | string | SteelBlue | color of the dark squares |
+| whiteSquareColor | string | AliceBlue | color of the light squares |
 | isDraggable | boolean | true | is board draggable |
 | orientation | string | 'w' | board orientation |
 | width | string (%) or number (px) | 600 | Width of the board and move list. The board will be 2/3rds of the width. |

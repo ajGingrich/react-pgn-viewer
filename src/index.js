@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import CompleteBoard from './CompleteBoard'
+import Viewer from './Viewer'
 
 class PgnViewer extends React.Component {
   constructor(props) {
@@ -12,21 +12,26 @@ class PgnViewer extends React.Component {
 
   makeViewer = ({ pgnInformation }) => {
     const {
-      blackSquareColour,
+      blackSquareColor,
+      whiteSquareColor,
       isDraggable,
       orientation,
       width,
       backgroundColor,
+      showCoordinates,
     } = this.props
 
     return (
-      <CompleteBoard
+      <Viewer
         pgnInformation={pgnInformation}
-        blackSquareColour={blackSquareColour}
+        blackSquareColor={blackSquareColor}
+        whiteSquareColor={whiteSquareColor}
+        isDraggable={isDraggable}
         width={width}
         isDraggable={isDraggable}
         orientation={orientation}
         backgroundColor={backgroundColor}
+        showCoordinates={showCoordinates}
       />
     )
   }
@@ -92,23 +97,23 @@ class PgnViewer extends React.Component {
 
 PgnViewer.propTypes = {
   backgroundColor: PropTypes.string,
-  blackSquareColour: PropTypes.string,
+  blackSquareColor: PropTypes.string,
   isDraggable: PropTypes.bool,
   nodeToModify: PropTypes.string,
   nodeModification: PropTypes.func,
   orientation: PropTypes.string,
   showCoordinates: PropTypes.bool,
-  whiteSquareColour: PropTypes.string,
+  whiteSquareColor: PropTypes.string,
   width: PropTypes.number,
 }
 
 PgnViewer.defaultProps = {
   backgroundColor: '#e1e5ed',
-  blackSquareColour: 'black',
+  blackSquareColor: 'steelblue',
   isDraggable: true,
   orientation: 'w',
   showCoordinates: true,
-  whiteSquareColour: 'white',
+  whiteSquareColor: 'aliceblue',
   width: 600,
 }
 
