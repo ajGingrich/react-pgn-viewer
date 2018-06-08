@@ -154,7 +154,7 @@ class Viewer extends React.Component {
   }
 
   render() {
-    const { blackSquareColor, whiteSquareColor, isDraggable, width, backgroundColor, showCoordinates } = this.props
+    const { blackSquareColor, whiteSquareColor, width, backgroundColor, showCoordinates } = this.props
     const { chess, moves, index, headerInfo, orientation, isPlaying } = this.state
     const isWhiteMove = (index-1) % 2 === 0
     let activeSquare
@@ -190,7 +190,6 @@ class Viewer extends React.Component {
           <Chessboard
             blackSquareColour={blackSquareColor}
             fen={chess && chess.fen() || 'start'}
-            isDraggable={isDraggable}
             orientation={orientation}
             showCoordinates={showCoordinates}
             activeSquare={activeSquare}
@@ -227,7 +226,6 @@ Viewer.propTypes = {
   backgroundColor: PropTypes.string,
   blackSquareColour: PropTypes.string,
   pgnInformation: PropTypes.string.isRequired,
-  isDraggable: PropTypes.bool,
   width: PropTypes.number
 }
 

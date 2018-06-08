@@ -14,7 +14,6 @@ class PgnViewer extends React.Component {
     const {
       blackSquareColor,
       whiteSquareColor,
-      isDraggable,
       orientation,
       width,
       backgroundColor,
@@ -26,9 +25,7 @@ class PgnViewer extends React.Component {
         pgnInformation={pgnInformation}
         blackSquareColor={blackSquareColor}
         whiteSquareColor={whiteSquareColor}
-        isDraggable={isDraggable}
         width={width}
-        isDraggable={isDraggable}
         orientation={orientation}
         backgroundColor={backgroundColor}
         showCoordinates={showCoordinates}
@@ -98,7 +95,6 @@ class PgnViewer extends React.Component {
 PgnViewer.propTypes = {
   backgroundColor: PropTypes.string,
   blackSquareColor: PropTypes.string,
-  isDraggable: PropTypes.bool,
   nodeToModify: PropTypes.string,
   nodeModification: PropTypes.func,
   orientation: PropTypes.string,
@@ -110,7 +106,6 @@ PgnViewer.propTypes = {
 PgnViewer.defaultProps = {
   backgroundColor: '#e1e5ed',
   blackSquareColor: 'steelblue',
-  isDraggable: true,
   orientation: 'w',
   showCoordinates: true,
   whiteSquareColor: 'aliceblue',

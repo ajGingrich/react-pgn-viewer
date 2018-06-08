@@ -1,6 +1,6 @@
 {
   "name": "react-pgn-viewer",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "React component for creating an interactive pgn viewer from string",
   "main": "dist/index.js",
   "directories": {
@@ -29,7 +29,7 @@
     "chess.js": "^0.10.2",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
-    "reactjs-chessboard": "0.0.4"
+    "reactjs-chessboard": "0.0.5"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

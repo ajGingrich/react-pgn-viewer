@@ -81,7 +81,6 @@ This library uses a fork of [react-chessboardjs](https://github.com/siansell/rea
 | backgroundColor | string | #e1e5ed | background of the entire viewer |
 | blackSquareColor | string | SteelBlue | color of the dark squares |
 | whiteSquareColor | string | AliceBlue | color of the light squares |
-| isDraggable | boolean | true | is board draggable |
 | orientation | string | 'w' | board orientation |
 | width | string (%) or number (px) | 600 | Width of the board and move list. The board will be 2/3rds of the width. |
 | showCoordinates | boolean | true | should show coordinates along the A file and first Rank |
