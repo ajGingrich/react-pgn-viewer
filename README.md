@@ -3,8 +3,6 @@
 ![npm version](https://img.shields.io/npm/v/react-pgn-viewer.svg)
 ![npm Downloads](https://img.shields.io/npm/dt/react-pgn-viewer.svg)
 ![license](https://img.shields.io/npm/l/react-pgn-viewer.svg)
-![bundle minified](https://img.shields.io/bundlephobia/min/react-pgn-viewer.svg)
-![bundle minified-gzip](https://img.shields.io/bundlephobia/minzip/react-pgn-viewer.svg)
 
 ## Installation
 
