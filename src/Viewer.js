@@ -116,7 +116,6 @@ class Viewer extends React.Component {
   }
 
   componentDidMount() {
-    // switch to regex here for header Info
     const { pgnInformation } = this.props
     const chess = new Chess.Chess()
     const index = 0
