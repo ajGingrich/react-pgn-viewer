@@ -72,7 +72,8 @@ gulp.task("server", function() {
 })
 
 gulp.task("watch", function() {
-  gulp.watch("src/**/*.js", ["rollup"]) /// also watch examples here?!
+  gulp.watch("src/**/*.js", ["rollup"])
+  gulp.watch("examples/**/*.js", ["rollup"])
 });
 
 gulp.task("dev", ["clean", "copy", "rollup", "server", "watch"]);
