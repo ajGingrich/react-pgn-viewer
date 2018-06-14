@@ -6,7 +6,8 @@ var webserver = require("gulp-webserver")
 var del = require("del")
 var env = process.env.NODE_ENV
 var isProduction = env === 'production'
-// bug with rollup-common-js 9.1.3 see https://github.com/dherges/ng-packagr/issues/657)
+var analyzerOptions = { limit: 15, filter: null }
+// bug with rollup-common-js 9.1.3 see https://github.com/dherges/ng-packagr/issues/657
 
 gulp.task("clean", function() {
   return del('dist/**', {force:true})
