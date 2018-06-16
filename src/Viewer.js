@@ -5,6 +5,7 @@ import Chessboard from 'reactjs-chessboard'
 import BoardHeader from './BoardHeader'
 import BoardFooter from './Footer/BoardFooter'
 import MoveList from './Moves/MoveList'
+import { getActiveSquare } from './helpers'
 
 class Viewer extends React.Component {
   constructor(props) {
@@ -149,6 +150,8 @@ class Viewer extends React.Component {
     })
 
     window.addEventListener('resize', this._updateDimensions)
+    // this._updateDimensions()
+    // not setting height correctly...
   }
 
   componentDidUpdate() {
@@ -166,25 +169,16 @@ class Viewer extends React.Component {
   render() {
     const { blackSquareColor, whiteSquareColor, width: defaultWidth, backgroundColor, showCoordinates } = this.props
     const { chess, moves, index, headerInfo, orientation, isPlaying, screenWidth } = this.state
-    const isWhiteMove = (index-1) % 2 === 0
-    let activeSquare, width, flexDirection
+    const activeSquare = getActiveSquare(moves, index)
+    let isMobile = false
+    let width, flexDirection
 
-    if(moves && index) {
-      switch (moves[index-1]) {
-        case 'O-O':
-          activeSquare = isWhiteMove ? 'g1' : 'g8'
-          break
-        case 'O-O-O':
-          activeSquare = isWhiteMove ? 'c1' : 'c8'
-          break
-        default:
-          activeSquare = moves[index-1].match(/[a-z][1-8]/gm)[0]
-      }
-    }
+    // get initial screenWidth Also?
 
     if(screenWidth && screenWidth < 768) {
-      width = 400
+      width = '90%'
       flexDirection = 'column'
+      isMobile = true
     } else {
       width = defaultWidth
       flexDirection = 'row'
@@ -215,13 +209,13 @@ class Viewer extends React.Component {
               border: '2px solid lightgrey',
             }}
             whiteSquareColour={whiteSquareColor}
-            width={(2/3)*width}
+            width={isMobile ? width : (2/3)*width}
           />
           <MoveList
             onChangeMove={this._handleChangeMove}
             currentIndex={index}
             moves={moves}
-            width={(1/3)*width}
+            width={isMobile ? width : (1/3)*width}
           />
         </div>
         <BoardFooter
