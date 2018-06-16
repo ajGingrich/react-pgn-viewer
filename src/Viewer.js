@@ -16,8 +16,13 @@ class Viewer extends React.Component {
       index: null,
       headerInfo: null,
       isPlaying: null,
+      screenWidth: null,
       orientation: this.props.orientation
     }
+  }
+
+  _updateDimensions = () => {
+    this.setState({ screenWidth: screen.width })
   }
 
   _handleNextMove = () => {
@@ -142,6 +147,8 @@ class Viewer extends React.Component {
       index: index,
       headerInfo: headerInfo,
     })
+
+    window.addEventListener('resize', this._updateDimensions)
   }
 
   componentDidUpdate() {
@@ -152,11 +159,15 @@ class Viewer extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._updateDimensions)
+  }
+
   render() {
-    const { blackSquareColor, whiteSquareColor, width, backgroundColor, showCoordinates } = this.props
-    const { chess, moves, index, headerInfo, orientation, isPlaying } = this.state
+    const { blackSquareColor, whiteSquareColor, width: defaultWidth, backgroundColor, showCoordinates } = this.props
+    const { chess, moves, index, headerInfo, orientation, isPlaying, screenWidth } = this.state
     const isWhiteMove = (index-1) % 2 === 0
-    let activeSquare
+    let activeSquare, width, flexDirection
 
     if(moves && index) {
       switch (moves[index-1]) {
@@ -171,10 +182,18 @@ class Viewer extends React.Component {
       }
     }
 
+    if(screenWidth && screenWidth < 768) {
+      width = 400
+      flexDirection = 'column'
+    } else {
+      width = defaultWidth
+      flexDirection = 'row'
+    }
+
     const pgnViewerMainStyles = {
       display: 'flex',
       justifyContent: 'center',
-      flexDirection: 'row',
+      flexDirection,
     }
 
     const pgnWrapperStyles = {
