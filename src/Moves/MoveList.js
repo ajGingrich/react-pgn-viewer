@@ -40,7 +40,7 @@ MoveList.propTypes = {
   currentIndex: PropTypes.number,
   moves: PropTypes.array,
   onChangeMove: PropTypes.func.isRequired,
-  width: PropTypes.number.isRequired,
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 
 export default MoveList

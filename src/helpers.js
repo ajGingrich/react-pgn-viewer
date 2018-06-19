@@ -22,24 +22,29 @@ const getActiveSquare = (moves, index) => {
 
 const getBaseStyles = (params) => {
   const { screenWidth, backgroundColor, defaultWidth } = params
-  const styles = JSON.parse(JSON.stringify(baseStyles))
-  let isMobile = false
-  let width
-  styles.wrapper.width = defaultWidth
-  styles.wrapper.backgroundColor = backgroundColor
+  const isScreenMobile = screenWidth && screenWidth < 768
+  const width = isScreenMobile ? '90%' : defaultWidth
+  const flexDirection = isScreenMobile ? 'column' : 'row'
+  const stylesToModify = []
 
-  if(screenWidth && screenWidth < 768) {
-    styles.base.width = '90%'
-    width = '90%'
-    styles.base.flexDirection = 'column'
-    isMobile = true
-  } else {
-    width = defaultWidth
-    styles.base.width = defaultWidth
-    styles.base.flexDirection = 'row'
+  stylesToModify.push({ area: 'base', 'stylePair': ['width', width] })
+  stylesToModify.push({ area: 'base', 'stylePair': ['flexDirection', flexDirection] })
+  stylesToModify.push({ area: 'wrapper', 'stylePair': ['width', defaultWidth] })
+  stylesToModify.push({ area: 'wrapper', 'stylePair': ['background', backgroundColor] })
+
+  const styles = setStyle(stylesToModify)
+
+  return { width, isMobile: isScreenMobile, baseStyles: styles.base, wrapperStyles: styles.wrapper }
+}
+
+const setStyle = (stylesToModify) => {
+  const styleClone = JSON.parse(JSON.stringify(baseStyles))
+
+  for (const style of stylesToModify) {
+    styleClone[style.area][style.stylePair[0]] = style.stylePair[1]
   }
 
-  return { width, isMobile, baseStyles: styles.base, wrapperStyles: styles.wrapper}
+  return styleClone
 }
 
 export { getActiveSquare, getBaseStyles }

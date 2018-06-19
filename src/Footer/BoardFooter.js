@@ -60,7 +60,7 @@ BoardFooter.propTypes = {
   onFlipBoard: PropTypes.func.isRequired,
   onLastMove: PropTypes.func.isRequired,
   onPlay: PropTypes.func.isRequired,
-  width: PropTypes.number,
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 
 export default BoardFooter

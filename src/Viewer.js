@@ -17,7 +17,7 @@ class Viewer extends React.Component {
       index: null,
       headerInfo: null,
       isPlaying: null,
-      screenWidth: null,
+      screenWidth: screen && screen.width,
       orientation: this.props.orientation
     }
   }
