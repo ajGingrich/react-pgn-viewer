@@ -5,7 +5,7 @@ import Chessboard from 'reactjs-chessboard'
 import BoardHeader from './BoardHeader'
 import BoardFooter from './Footer/BoardFooter'
 import MoveList from './Moves/MoveList'
-import { getActiveSquare } from './helpers'
+import { getActiveSquare, getBaseStyles } from './helpers'
 
 class Viewer extends React.Component {
   constructor(props) {
@@ -170,35 +170,12 @@ class Viewer extends React.Component {
     const { blackSquareColor, whiteSquareColor, width: defaultWidth, backgroundColor, showCoordinates } = this.props
     const { chess, moves, index, headerInfo, orientation, isPlaying, screenWidth } = this.state
     const activeSquare = getActiveSquare(moves, index)
-    let isMobile = false
-    let width, flexDirection
-
-    // get initial screenWidth Also?
-
-    if(screenWidth && screenWidth < 768) {
-      width = '90%'
-      flexDirection = 'column'
-      isMobile = true
-    } else {
-      width = defaultWidth
-      flexDirection = 'row'
-    }
-
-    const pgnViewerMainStyles = {
-      display: 'flex',
-      justifyContent: 'center',
-      flexDirection,
-    }
-
-    const pgnWrapperStyles = {
-      width: width,
-      background: backgroundColor,
-    }
+    const { baseStyles, wrapperStyles, isMobile, width } = getBaseStyles({ screenWidth, backgroundColor, defaultWidth })
 
     return (
-      <div className="pgnWrapper" style={pgnWrapperStyles}>
+      <div className="pgnWrapper" style={wrapperStyles}>
         {headerInfo && <BoardHeader headerInfo={headerInfo} width={width} />}
-        <div className="pgnViewerMain" style={pgnViewerMainStyles}>
+        <div className="pgnViewerMain" style={baseStyles}>
           <Chessboard
             blackSquareColour={blackSquareColor}
             fen={chess && chess.fen() || 'start'}
