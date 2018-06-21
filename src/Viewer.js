@@ -18,13 +18,13 @@ class Viewer extends React.Component {
       headerInfo: null,
       isPlaying: null,
       isLoaded: null,
-      screenWidth: screen && screen.width,
+      windowWidth: window && window.innerWidth,
       orientation: this.props.orientation
     }
   }
 
   _updateDimensions = () => {
-    this.setState({ screenWidth: screen.width })
+    this.setState({ windowWidth: window && window.innerWidth })
   }
 
   _handleNextMove = () => {
@@ -171,8 +171,8 @@ class Viewer extends React.Component {
 
   render() {
     const { blackSquareColor, whiteSquareColor, width: defaultWidth, backgroundColor, showCoordinates } = this.props
-    const { chess, moves, index, headerInfo, orientation, isPlaying, screenWidth } = this.state
-    const { baseStyles, wrapperStyles, isMobile, width } = getBaseStyles({ screenWidth, backgroundColor, defaultWidth })
+    const { chess, moves, index, headerInfo, orientation, isPlaying, windowWidth } = this.state
+    const { baseStyles, wrapperStyles, isMobile, width } = getBaseStyles({ windowWidth, backgroundColor, defaultWidth })
     const activeSquare = getActiveSquare(moves, index)
 
     return (

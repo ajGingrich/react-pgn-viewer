@@ -21,8 +21,8 @@ const getActiveSquare = (moves, index) => {
 }
 
 const getBaseStyles = (params) => {
-  const { screenWidth, backgroundColor, defaultWidth } = params
-  const isScreenMobile = screenWidth && screenWidth < 768
+  const { windowWidth, backgroundColor, defaultWidth } = params
+  const isScreenMobile = windowWidth && windowWidth < 768
   const width = isScreenMobile ? '100%' : defaultWidth
   const flexDirection = isScreenMobile ? 'column' : 'row'
   const stylesToModify = []
