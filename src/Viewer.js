@@ -17,6 +17,7 @@ class Viewer extends React.Component {
       index: null,
       headerInfo: null,
       isPlaying: null,
+      isLoaded: null,
       screenWidth: screen && screen.width,
       orientation: this.props.orientation
     }
@@ -150,6 +151,8 @@ class Viewer extends React.Component {
     })
 
     window.addEventListener('resize', this._updateDimensions)
+    window.addEventListener('load', this._updateDimensions)
+    window.addEventListener('orientationchange', this._updateDimensions)
   }
 
   componentDidUpdate() {
@@ -162,6 +165,8 @@ class Viewer extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this._updateDimensions)
+    window.removeEventListener('load', this._updateDimensions)
+    window.removeEventListener('orientationchange', this._updateDimensions)
   }
 
   render() {
@@ -169,8 +174,6 @@ class Viewer extends React.Component {
     const { chess, moves, index, headerInfo, orientation, isPlaying, screenWidth } = this.state
     const { baseStyles, wrapperStyles, isMobile, width } = getBaseStyles({ screenWidth, backgroundColor, defaultWidth })
     const activeSquare = getActiveSquare(moves, index)
-
-    // console.log(width, 'width')
 
     return (
       <div className="pgnWrapper" style={wrapperStyles}>
