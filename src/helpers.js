@@ -23,13 +23,13 @@ const getActiveSquare = (moves, index) => {
 const getBaseStyles = (params) => {
   const { screenWidth, backgroundColor, defaultWidth } = params
   const isScreenMobile = screenWidth && screenWidth < 768
-  const width = isScreenMobile ? '90%' : defaultWidth
+  const width = isScreenMobile ? '100%' : defaultWidth
   const flexDirection = isScreenMobile ? 'column' : 'row'
   const stylesToModify = []
 
   stylesToModify.push({ area: 'base', 'stylePair': ['width', width] })
   stylesToModify.push({ area: 'base', 'stylePair': ['flexDirection', flexDirection] })
-  stylesToModify.push({ area: 'wrapper', 'stylePair': ['width', defaultWidth] })
+  stylesToModify.push({ area: 'wrapper', 'stylePair': ['width', width] })
   stylesToModify.push({ area: 'wrapper', 'stylePair': ['background', backgroundColor] })
 
   const styles = setStyle(stylesToModify)

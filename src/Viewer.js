@@ -150,8 +150,6 @@ class Viewer extends React.Component {
     })
 
     window.addEventListener('resize', this._updateDimensions)
-    // this._updateDimensions()
-    // not setting height correctly...
   }
 
   componentDidUpdate() {
@@ -169,8 +167,10 @@ class Viewer extends React.Component {
   render() {
     const { blackSquareColor, whiteSquareColor, width: defaultWidth, backgroundColor, showCoordinates } = this.props
     const { chess, moves, index, headerInfo, orientation, isPlaying, screenWidth } = this.state
-    const activeSquare = getActiveSquare(moves, index)
     const { baseStyles, wrapperStyles, isMobile, width } = getBaseStyles({ screenWidth, backgroundColor, defaultWidth })
+    const activeSquare = getActiveSquare(moves, index)
+
+    // console.log(width, 'width')
 
     return (
       <div className="pgnWrapper" style={wrapperStyles}>
