@@ -191,12 +191,15 @@ class Viewer extends React.Component {
             whiteSquareColour={whiteSquareColor}
             width={isMobile ? width : (2/3)*width}
           />
-          <MoveList
-            onChangeMove={this._handleChangeMove}
-            currentIndex={index}
-            moves={moves}
-            width={isMobile ? width : (1/3)*width}
-          />
+          {
+            !isMobile &&
+            <MoveList
+              onChangeMove={this._handleChangeMove}
+              currentIndex={index}
+              moves={moves}
+              width={(1/3)*width}
+            />
+          }
         </div>
         <BoardFooter
           isPlaying={isPlaying}
@@ -209,6 +212,14 @@ class Viewer extends React.Component {
           onLastMove={this._handleLastMove}
           width={width}
         />
+        {isMobile &&
+          <MoveList
+            onChangeMove={this._handleChangeMove}
+            currentIndex={index}
+            moves={moves}
+            width={width}
+          />
+        }
       </div>
     )
   }
