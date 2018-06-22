@@ -28,24 +28,25 @@ class BoardFooter extends React.Component {
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'center',
+      alignItems: 'center',
       width: width,
       paddingTop: '10px',
       paddingBottom: '5px'
     }
 
     const iconStyles = {
-      paddingRight: '20px',
+      paddingLeft: '20px',
     }
 
     return (
       <div style={footerStyles}>
-        <Download onDownload={onDownload} iconStyles={iconStyles} />
-        <Flip onFlipBoard={onFlipBoard} iconStyles={iconStyles} />
         <Reset onReset={onReset} iconStyles={iconStyles} />
         <PreviousMove onPreviousMove={onPreviousMove} iconStyles={iconStyles} />
         <NextMove onNextMove={onNextMove} iconStyles={iconStyles} />
         <LastMove onLastMove={onLastMove} iconStyles={iconStyles} />
         <Play onPlay={onPlay} iconStyles={iconStyles} isPlaying={isPlaying} />
+        <Flip onFlipBoard={onFlipBoard} iconStyles={iconStyles} />
+        <Download onDownload={onDownload} iconStyles={iconStyles} />
       </div>
     )
   }

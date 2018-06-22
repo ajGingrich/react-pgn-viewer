@@ -14,7 +14,7 @@ class Download extends React.Component {
   render() {
     return (
       <div onClick={this._handleDownload} style={this.props.iconStyles}>
-        <i className="fa fa-download fa-lg"></i>
+        <i className="pgnIcon fa fa-download fa-lg"></i>
       </div>
     )
   }

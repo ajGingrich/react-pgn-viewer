@@ -16,7 +16,7 @@ class Play extends React.Component {
 
     return (
       <div onClick={this._handlePlay} style={this.props.iconStyles}>
-        <i className={`fa ${iconToShow} fa-lg`}></i>
+        <i className={`pgnIcon fa ${iconToShow} fa-lg`}></i>
       </div>
     )
   }

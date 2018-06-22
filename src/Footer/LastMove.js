@@ -14,7 +14,7 @@ class LastMove extends React.Component {
   render() {
     return (
       <div onClick={this._handleLastMove} style={this.props.iconStyles}>
-        <i className="fa fa-step-forward fa-lg"></i>
+        <i className="pgnIcon fa fa-step-forward fa-lg"></i>
       </div>
     )
   }
