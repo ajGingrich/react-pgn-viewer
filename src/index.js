@@ -78,12 +78,6 @@ class PgnViewer extends React.Component {
   render() {
     const { innerHTML, children } = this.props
 
-    // const pgnStyles = {
-    //   display: 'flex',
-    //   justifyContent: 'center'
-    // <div style={pgnStyles}>
-    // }
-
     return (
       <div>
         {innerHTML && <div dangerouslySetInnerHTML={this.createInnerHtml()}></div>}

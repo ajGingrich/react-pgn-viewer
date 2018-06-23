@@ -24,6 +24,7 @@ class Move extends React.Component {
 
     if (currentIndex === moveIndex) {
       moveStyles.color = 'orange'
+      moveStyles.fontWeight = 700
     }
 
     return (
