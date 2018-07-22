@@ -4,7 +4,7 @@ import Move from './Move'
 
 class MoveList extends React.Component {
   render() {
-    const { moves, currentIndex, onChangeMove, width, startAtMove, endAtMove } = this.props
+    const { moves, currentIndex, onChangeMove, width, startAtMove, endAtMove, fenMove } = this.props
 
     if(!moves) return null
 
@@ -18,7 +18,7 @@ class MoveList extends React.Component {
 
     return (
       <div className="pgnViewerMoveList" style={pgnViewerMoveListStyles}>
-        {
+        {!fenMove &&
           moves.map((move, index) => {
             if(index < startAtMove - 1 || index > endAtMove - 1) {
               return null
@@ -35,6 +35,9 @@ class MoveList extends React.Component {
             }
           })
         }
+        {fenMove &&
+          <div>{fenMove % 2 === 0 ? 'White' : 'Black'} to move</div>
+        }
       </div>
     )
   }
@@ -44,6 +47,7 @@ MoveList.propTypes = {
   currentIndex: PropTypes.number,
   moves: PropTypes.array,
   onChangeMove: PropTypes.func.isRequired,
+  fenMove: PropTypes.number,
   startAtMove: PropTypes.number,
   endAtMove: PropTypes.number,
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

@@ -56,6 +56,17 @@ class Example2 extends React.Component {
 }
 ```
 
+#### Different viewing methods
+
+For viewing partial pgns or a singular FEN position, add these modifiers to the pgn text
+
+| Modifier | Explanation |
+| --- | :-------: |
+| [StartAtMove "8"] | This will skip the first 7 moves and start immediately at move 8. Must be a whole number. |
+| [EndAtMove "15"] | This will cut off the game after move 15 and must be used in combination with StartAtMove. Must be a whole number. |
+| [Fen "10w"] | Fen cannot be used with StartAtMove or EndAtMove because it is one position. This shows move 10 after white moved so it will be blacks move |
+| [Fen "15b"] | This shows the position after Black moved in 15. It will be whites move. |
+
 #### The styles
 The icons use font-awesome 4 CSS. If you aren't already using that, simply put the cdn in the head of your html
 
@@ -85,7 +96,7 @@ This library uses [reactjs-chessboard](https://github.com/ajgingrich/reactjs-che
 
 ## Demo
 
-Link with a demo upcoming.
+https://blog.andrewgingrich.com/#/post/2018/07/22/chess-urbina-duran-2018
 
 ## Contributing
 

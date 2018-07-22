@@ -21,6 +21,7 @@ class BoardFooter extends React.Component {
       onLastMove,
       onPlay,
       isPlaying,
+      fenMove,
     } = this.props
 
     const footerStyles = {
@@ -40,11 +41,11 @@ class BoardFooter extends React.Component {
 
     return (
       <div style={footerStyles}>
-        <Reset onReset={onReset} iconStyles={iconStyles} />
-        <PreviousMove onPreviousMove={onPreviousMove} iconStyles={iconStyles} />
-        <NextMove onNextMove={onNextMove} iconStyles={iconStyles} />
-        <LastMove onLastMove={onLastMove} iconStyles={iconStyles} />
-        <Play onPlay={onPlay} iconStyles={iconStyles} isPlaying={isPlaying} />
+        {!fenMove && <Reset onReset={onReset} iconStyles={iconStyles} />}
+        {!fenMove && <PreviousMove onPreviousMove={onPreviousMove} iconStyles={iconStyles} />}
+        {!fenMove && <NextMove onNextMove={onNextMove} iconStyles={iconStyles} />}
+        {!fenMove && <LastMove onLastMove={onLastMove} iconStyles={iconStyles} />}
+        {!fenMove && <Play onPlay={onPlay} iconStyles={iconStyles} isPlaying={isPlaying} />}
         <Flip onFlipBoard={onFlipBoard} iconStyles={iconStyles} />
         <Download onDownload={onDownload} iconStyles={iconStyles} />
       </div>
@@ -53,6 +54,7 @@ class BoardFooter extends React.Component {
 }
 
 BoardFooter.propTypes = {
+  fenMove: PropTypes.number,
   onDownload: PropTypes.func.isRequired,
   onNextMove: PropTypes.func.isRequired,
   onPreviousMove: PropTypes.func.isRequired,

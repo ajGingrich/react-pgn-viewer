@@ -19,6 +19,7 @@ class Viewer extends React.Component {
       isPlaying: null,
       isLoaded: null,
       startAtMove: null,
+      fenMove: null,
       endAtMove: null,
       windowWidth: window && window.innerWidth,
       orientation: this.props.orientation
@@ -118,14 +119,16 @@ class Viewer extends React.Component {
   }
 
   _handleDownload = () => {
-    const { headerInfo } = this.state
+    const { headerInfo, fenMove, chess } = this.state
     const element = document.createElement('a')
-    const file = new Blob([this.props.pgnInformation], {type: 'text/plain'})
+    const fileContent = fenMove ? chess.fen() : this.props.pgnInformation
+    const fileFormat = fenMove ? 'txt' : 'pgn'
+    const file = new Blob([fileContent], {type: 'text/plain'})
     const whiteLastName = headerInfo.White.split(' ')[1]
     const blackLastName = headerInfo.Black.split(' ')[1]
 
     element.href = URL.createObjectURL(file)
-    element.download = `${whiteLastName}vs${blackLastName}${headerInfo.EventDate}.pgn`
+    element.download = `${whiteLastName}vs${blackLastName}${headerInfo.EventDate}.${fileFormat}`
     element.click()
   }
 
@@ -152,9 +155,18 @@ class Viewer extends React.Component {
 
     const startAtMove = (headerInfo.StartAtMove * 2) - 1
     const endAtMove = headerInfo.EndAtMove * 2
+    const fen = headerInfo.Fen && headerInfo.Fen.split('')
+    const isWhiteMove = fen && fen.pop() === 'b'
+    const fenMoveNumber = fen && fen.join('')
+    const fenMove = isWhiteMove ? fenMoveNumber * 2 : (fenMoveNumber * 2) - 1
 
     if(startAtMove) {
       for (let i=0;i < startAtMove;i++) {
+        chess.move(moves[index])
+        index++
+      }
+    } else if(fen) {
+      for (let i=0;i < fenMove;i++) {
         chess.move(moves[index])
         index++
       }
@@ -166,6 +178,7 @@ class Viewer extends React.Component {
       index: index,
       startAtMove: startAtMove,
       endAtMove: endAtMove,
+      fenMove: fen ? fenMove : null,
       headerInfo: headerInfo,
     })
 
@@ -190,7 +203,18 @@ class Viewer extends React.Component {
 
   render() {
     const { blackSquareColor, whiteSquareColor, width: defaultWidth, backgroundColor, showCoordinates } = this.props
-    const { chess, moves, index, headerInfo, orientation, isPlaying, windowWidth, startAtMove, endAtMove } = this.state
+    const {
+      chess,
+      moves,
+      index,
+      headerInfo,
+      orientation,
+      isPlaying,
+      windowWidth,
+      startAtMove,
+      endAtMove,
+      fenMove,
+    } = this.state
     const { baseStyles, wrapperStyles, isMobile, width } = getBaseStyles({ windowWidth, backgroundColor, defaultWidth })
     const activeSquare = getActiveSquare(moves, index)
 
@@ -210,8 +234,7 @@ class Viewer extends React.Component {
             whiteSquareColour={whiteSquareColor}
             width={isMobile ? width : (2/3)*width}
           />
-          {
-            !isMobile &&
+          {!isMobile &&
             <MoveList
               onChangeMove={this._handleChangeMove}
               currentIndex={index}
@@ -219,6 +242,8 @@ class Viewer extends React.Component {
               width={(1/3)*width}
               startAtMove={startAtMove}
               endAtMove={endAtMove}
+              fenMove={fenMove}
+
             />
           }
         </div>
@@ -230,6 +255,7 @@ class Viewer extends React.Component {
           onNextMove={this._handleNextMove}
           onPreviousMove={this._handlePreviousMove}
           onReset={this._handleReset}
+          fenMove={fenMove}
           onLastMove={this._handleLastMove}
           width={width}
         />
@@ -241,6 +267,7 @@ class Viewer extends React.Component {
             width={width}
             startAtMove={startAtMove}
             endAtMove={endAtMove}
+            fenMove={fenMove}
           />
         }
       </div>
