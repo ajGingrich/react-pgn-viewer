@@ -18,6 +18,8 @@ class Viewer extends React.Component {
       headerInfo: null,
       isPlaying: null,
       isLoaded: null,
+      startAtMove: null,
+      endAtMove: null,
       windowWidth: window && window.innerWidth,
       orientation: this.props.orientation
     }
@@ -27,11 +29,23 @@ class Viewer extends React.Component {
     this.setState({ windowWidth: window && window.innerWidth })
   }
 
+  _makeIncreasingMoves = ({ numberOfMoves, reset }) => {
+    const { chess, moves, index: currentIndex } = this.state
+    let index = reset ? 0 : new Number(currentIndex)
+
+    for(let i=0;i < numberOfMoves;i++) {
+      chess.move(moves[index])
+      index++
+    }
+
+    this.setState({ chess: chess, index: index })
+  }
+
   _handleNextMove = () => {
-    const { moves, chess, index: currentIndex } = this.state
+    const { moves, chess, index: currentIndex, endAtMove } = this.state
     let index = new Number(currentIndex)
 
-    if(index >= moves.length) return
+    if(index >= moves.length || currentIndex === endAtMove) return
 
     chess.move(moves[index])
     index++
@@ -40,10 +54,10 @@ class Viewer extends React.Component {
   }
 
   _handlePreviousMove = () => {
-    const { chess, index: currentIndex } = this.state
+    const { chess, index: currentIndex, startAtMove } = this.state
     let index = new Number(currentIndex)
 
-    if(index <= 0) return
+    if(index <= 0 || currentIndex === startAtMove) return
 
     chess.undo()
     index--
@@ -52,28 +66,25 @@ class Viewer extends React.Component {
   }
 
   _handleReset = () => {
-    const { chess } = this.state
+    const { chess, startAtMove } = this.state
     const index = 0
 
     chess.reset()
 
-    this.setState({ chess: chess, index: index })
+    if(startAtMove) {
+      this._makeIncreasingMoves({ numberOfMoves: startAtMove, reset: true })
+    } else {
+      this.setState({ chess: chess, index: index })
+    }
   }
 
   _handleLastMove = () => {
-    const { chess, moves, index: currentIndex } = this.state
-    let index = new Number(currentIndex)
+    const { moves, index, endAtMove } = this.state
 
-    if(index >= moves.length) return
+    if(index >= moves.length || index === endAtMove) return
 
-    const moveDifference = moves.length - index
-
-    for(let i=0;i < moveDifference;i++) {
-      chess.move(moves[index])
-      index++
-    }
-
-    this.setState({ chess: chess, index: index })
+    const moveDifference = endAtMove ? endAtMove - index : moves.length - index
+    this._makeIncreasingMoves({ numberOfMoves: moveDifference })
   }
 
   _handleFlipBoard = () => {
@@ -89,8 +100,7 @@ class Viewer extends React.Component {
   }
 
   _handleChangeMove = (moveIndex) => {
-    const { moves, chess, index: currentIndex } = this.state
-    let index = new Number(currentIndex)
+    const { chess, index } = this.state
 
     if (moveIndex === index) return
 
@@ -98,16 +108,13 @@ class Viewer extends React.Component {
       for (let i=0;i < (index - moveIndex);i++) {
         chess.undo()
       }
-    } else if (moveIndex > index) {
+
+      this.setState({ chess: chess, index: moveIndex })
+    } else {
       const moveDifference = moveIndex - index
 
-      for (let i=0;i < moveDifference;i++) {
-        chess.move(moves[index])
-        index++
-      }
+      this._makeIncreasingMoves({ numberOfMoves: moveDifference})
     }
-
-    this.setState({ chess: chess, index: moveIndex })
   }
 
   _handleDownload = () => {
@@ -125,8 +132,8 @@ class Viewer extends React.Component {
   componentDidMount() {
     const { pgnInformation } = this.props
     const chess = new Chess.Chess()
-    const index = 0
     const pgnString = pgnInformation.trim().replace(/\[/g, '')
+    let index = 0
 
     if(!pgnString) return null
 
@@ -143,10 +150,22 @@ class Viewer extends React.Component {
     const moves = chess.history()
     chess.reset()
 
+    const startAtMove = (headerInfo.StartAtMove * 2) - 1
+    const endAtMove = headerInfo.EndAtMove * 2
+
+    if(startAtMove) {
+      for (let i=0;i < startAtMove;i++) {
+        chess.move(moves[index])
+        index++
+      }
+    }
+
     this.setState({
       chess: chess,
       moves: moves,
       index: index,
+      startAtMove: startAtMove,
+      endAtMove: endAtMove,
       headerInfo: headerInfo,
     })
 
@@ -171,7 +190,7 @@ class Viewer extends React.Component {
 
   render() {
     const { blackSquareColor, whiteSquareColor, width: defaultWidth, backgroundColor, showCoordinates } = this.props
-    const { chess, moves, index, headerInfo, orientation, isPlaying, windowWidth } = this.state
+    const { chess, moves, index, headerInfo, orientation, isPlaying, windowWidth, startAtMove, endAtMove } = this.state
     const { baseStyles, wrapperStyles, isMobile, width } = getBaseStyles({ windowWidth, backgroundColor, defaultWidth })
     const activeSquare = getActiveSquare(moves, index)
 
@@ -198,6 +217,8 @@ class Viewer extends React.Component {
               currentIndex={index}
               moves={moves}
               width={(1/3)*width}
+              startAtMove={startAtMove}
+              endAtMove={endAtMove}
             />
           }
         </div>
@@ -218,6 +239,8 @@ class Viewer extends React.Component {
             currentIndex={index}
             moves={moves}
             width={width}
+            startAtMove={startAtMove}
+            endAtMove={endAtMove}
           />
         }
       </div>
