@@ -77,6 +77,6 @@ gulp.task("watch", function() {
   gulp.watch("examples/**/*.js", gulp.series("rollup"))
 });
 
-gulp.task("dev", gulp.series("clean", gulp.parallel("copy", "rollup"), "server", "watch"));
+gulp.task("dev", gulp.series("clean", "copy", "rollup", "server", "watch"));
 
 gulp.task("prod", gulp.series("clean", "rollup"));
