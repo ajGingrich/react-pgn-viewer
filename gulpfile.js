@@ -73,10 +73,10 @@ gulp.task("server", function() {
 })
 
 gulp.task("watch", function() {
-  gulp.watch("src/**/*.js", ["rollup"])
-  gulp.watch("examples/**/*.js", ["rollup"])
+  gulp.watch("src/**/*.js", gulp.series("rollup"))
+  gulp.watch("examples/**/*.js", gulp.series("rollup"))
 });
 
-gulp.task("dev", ["clean", "copy", "rollup", "server", "watch"]);
+gulp.task("dev", gulp.series("clean", gulp.parallel("copy", "rollup"), "server", "watch"));
 
-gulp.task("prod", ["clean", "rollup"]);
+gulp.task("prod", gulp.series("clean", "rollup"));
