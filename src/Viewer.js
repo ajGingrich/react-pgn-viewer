@@ -142,10 +142,11 @@ class Viewer extends React.Component {
 
     const pgnArray = pgnString.split(']')
 
-    chess.load_pgn(pgnArray[pgnArray.length - 1])
+    chess.load_pgn(pgnString);
 
     for (let i=0;i < pgnArray.length - 2;i++) {
-      const headerInfo = pgnArray[i].trim().split(' "')
+	  const headerInfo = pgnArray[i].trim().split(' "');
+	  if (!headerInfo[1]) continue;
       chess.header(headerInfo[0].replace(/\"/g, ''), headerInfo[1].replace(/\"/g, ''))
     }
 
