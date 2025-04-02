@@ -1,26 +1,19 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-class Flip extends React.Component {
+function Flip({ onFlipBoard, iconStyles }) {
+  const handleFlipBoard = () => {
+    if (typeof onFlipBoard === 'function') {
+      onFlipBoard();
+    }
+  };
 
-  _handleFlipBoard = () => {
-    const { onFlipBoard } = this.props
-
-    if(typeof onFlipBoard !== 'function') return
-
-    onFlipBoard()
-  }
-
-  render() {
-    const { iconStyles } = this.props
-    const flipIconStyles = JSON.parse(JSON.stringify(iconStyles))
-
-    return (
-      <div onClick={this._handleFlipBoard} style={flipIconStyles}>
-        <i className="pgnIcon fa fa-exchange fa-lg fa-rotate-90"></i>
-      </div>
-    )
-  }
+  // No need to deep clone iconStyles unless modifying them locally
+  return (
+    <div onClick={handleFlipBoard} style={iconStyles} title="Flip Board">
+      <i className="pgnIcon fa fa-exchange fa-lg fa-rotate-90"></i>
+    </div>
+  );
 }
 
 Flip.propTypes = {

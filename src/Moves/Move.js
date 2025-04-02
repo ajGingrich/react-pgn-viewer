@@ -1,37 +1,31 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
 
-class Move extends React.Component {
+function Move({ move, moveIndex, currentIndex, onChangeMove }) {
+  const isWhiteMove = moveIndex % 2 !== 0;
+  const whiteMoveNumber = Math.ceil(moveIndex / 2) + '.';
 
-  _handleChangeMove = () => {
-    const { onChangeMove, moveIndex } = this.props
+  const moveStyles = {
+    cursor: 'pointer',
+    color: 'black',
+    display: 'inline-block',
+    fontWeight: currentIndex === moveIndex ? 700 : 400, // Apply bold directly
+    padding: '0 2px', // Add some padding for better spacing
+  };
 
-    if(typeof onChangeMove !== 'function') return
-
-    onChangeMove(moveIndex)
-  }
-
-  render() {
-    const { move, moveIndex, currentIndex } = this.props
-    const isWhiteMove = moveIndex % 2 !== 0
-    const whiteMoveNumber = Math.ceil(moveIndex/2) + '.'
-
-    const moveStyles = {
-      cursor: 'pointer',
-      color: 'black',
-      display: 'inline-block',
+  // Use useCallback for the handler if performance becomes an issue,
+  // but for simple cases, an inline function is fine.
+  const handleChangeMove = useCallback(() => {
+    if (typeof onChangeMove === 'function') {
+      onChangeMove(moveIndex);
     }
+  }, [onChangeMove, moveIndex]); // Dependencies for useCallback
 
-    if (currentIndex === moveIndex) {
-      moveStyles.fontWeight = 700
-    }
-
-    return (
-      <span onClick={this._handleChangeMove} style={moveStyles}>
-        {isWhiteMove && whiteMoveNumber}&nbsp;{move}&nbsp;
-      </span>
-    )
-  }
+  return (
+    <span onClick={handleChangeMove} style={moveStyles}>
+      {isWhiteMove && whiteMoveNumber}&nbsp;{move}&nbsp;
+    </span>
+  );
 }
 
 Move.propTypes = {

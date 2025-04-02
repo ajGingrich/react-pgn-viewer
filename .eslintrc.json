@@ -1,15 +1,18 @@
 {
     "parserOptions": {
-        "ecmaVersion": 6,
+        "ecmaVersion": 2022, // Updated ECMAScript version
         "sourceType": "module",
         "ecmaFeatures": {
             "jsx": true
+        },
+        "requireConfigFile": false, // Necessary for @babel/eslint-parser
+        "babelOptions": {
+           "presets": [["@babel/preset-react", { "runtime": "automatic" }]] // Inform parser about JSX transform
         }
     },
-    "plugins": [
-      "react"
-    ],
+    // "plugins" array removed, handled by eslint-config-react-app
     "rules": {
+        // Keep existing custom rules for now, remove React-specific ones below
         "camelcase": "error",
         "comma-spacing": ["error", { "before": false, "after": true }],
         "curly": ["error", "multi-line"],
@@ -31,12 +34,19 @@
         "no-useless-constructor": "error",
         "no-var": "error",
         "prefer-const": ["error", { "destructuring": "any","ignoreReadBeforeAssign": false }],
-        "quotes": ["error", "single"],
-        "react/jsx-uses-vars": "error",
-        "react/jsx-uses-react": "error",
+        "quotes": ["error", "double"], // Often preferred/enforced by formatters
+        // "react/jsx-uses-vars": "error", // Removed, handled by new runtime/config
+        // "react/jsx-uses-react": "error", // Removed, handled by new runtime/config
         "semi-spacing": ["error", {"before": false, "after": false}],
         "valid-typeof": "error"
+        // Add rules from eslint-plugin-react-hooks if needed, though react-app config includes them
+        // "react-hooks/rules-of-hooks": "error",
+        // "react-hooks/exhaustive-deps": "warn"
     },
-    "env": {},
-    "parser": "babel-eslint"
+    "env": {
+        "browser": true, // Add browser environment
+        "es2021": true, // Add ES environment
+        "node": true // Add Node environment if needed for scripts/config files
+    },
+    "parser": "@babel/eslint-parser" // Use the new parser
 }

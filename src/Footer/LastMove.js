@@ -1,23 +1,18 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-class LastMove extends React.Component {
+function LastMove({ onLastMove, iconStyles }) {
+  const handleLastMove = () => {
+    if (typeof onLastMove === 'function') {
+      onLastMove();
+    }
+  };
 
-  _handleLastMove = () => {
-    const { onLastMove } = this.props
-
-    if(typeof onLastMove !== 'function') return
-
-    onLastMove()
-  }
-
-  render() {
-    return (
-      <div onClick={this._handleLastMove} style={this.props.iconStyles}>
-        <i className="pgnIcon fa fa-step-forward fa-lg"></i>
-      </div>
-    )
-  }
+  return (
+    <div onClick={handleLastMove} style={iconStyles} title="Go to Last Move">
+      <i className="pgnIcon fa fa-step-forward fa-lg"></i>
+    </div>
+  );
 }
 
 LastMove.propTypes = {
