@@ -1,22 +1,28 @@
-import React from 'react'
-import PgnViewer from '../src/index'
-import hljs from 'highlight.js/lib/highlight';
+import React from 'react';
+import PgnViewer from '../src/index';
+import hljs from 'highlight.js/lib/core'; // Import core
+import javascript from 'highlight.js/lib/languages/javascript'; // Import JS language
+
+// Register the language
+hljs.registerLanguage('javascript', javascript);
 
 // ['javascript', 'java', 'python'].forEach((langName) => {
-//   const langModule = require(`highlight.js/lib/languages/${langName}`);
+//   const langModule = require(`highlight.js/lib/languages/${langName}`); // Keep commented code for reference
 //   hljs.registerLanguage(langName, langModule);
 // });
 
 class App extends React.Component {
-
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.handleHighlight = this.handleHighlight.bind(this)
+    this.handleHighlight = this.handleHighlight.bind(this);
   }
 
   handleHighlight(node) {
-    hljs.highlightBlock(node)
+    // Ensure hljs is available and node exists
+    if (hljs && node) {
+      hljs.highlightElement(node); // Use highlightElement for better control
+    }
   }
 
   render() {
