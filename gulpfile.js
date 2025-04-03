@@ -6,7 +6,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
 import terser from '@rollup/plugin-terser';
 import webserver from 'gulp-webserver';
-import del from 'del';
+import * as del from 'del';
 
 const env = process.env.NODE_ENV;
 const isProduction = env === 'production';
@@ -31,7 +31,8 @@ const commonPlugins = [
 
 // Clean the dist directory
 gulp.task('clean', () => {
-  return del('dist/**', { force: true });
+  // Use deleteAsync when using namespace import for 'del'
+  return del.deleteAsync('dist/**', { force: true });
 });
 
 // Copy HTML for examples
