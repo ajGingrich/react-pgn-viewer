@@ -68,3 +68,12 @@ typings/
 
 # bundle
 dist/
+
+# Vite temporary config files
+vite.config.ts.timestamp-*.mjs
+
+# local vscode settings
+.vscode
+
+# AI
+.roo/
