@@ -10,7 +10,7 @@ export type VerboseMove = Omit<ChessJsMove, 'lan' | 'san'> & {
 };
 
 export interface PgnHeaders {
-  [key: string]: string | undefined;
+  [key: string]: string | number | undefined;
   White?: string;
   Black?: string;
   Date?: string;
@@ -25,8 +25,8 @@ export interface PgnHeaders {
   Opening?: string;
   Variation?: string;
   EventDate?: string;
-  StartAtMove?: string;
-  EndAtMove?: string;
+  StartPly?: number;
+  EndPly?: number;
   Fen?: string;
 }
 

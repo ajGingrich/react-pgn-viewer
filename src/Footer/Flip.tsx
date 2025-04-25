@@ -17,6 +17,7 @@ const Flip: React.FC<FlipProps> = ({ onFlipBoard, iconStyles }) => {
       onClick={handleFlipBoard}
       style={iconStyles}
       fontSize="large"
+      sx={{ '&:hover': { cursor: 'pointer' } }}
     />
   );
 };

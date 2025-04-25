@@ -1,5 +1,5 @@
 import React from 'react';
-import { Downloading as DownloadIcon } from '@mui/icons-material';
+import { GetApp as DownloadIcon } from '@mui/icons-material';
 
 interface DownloadProps {
   onDownload: () => void;
@@ -17,6 +17,7 @@ const Download: React.FC<DownloadProps> = ({ onDownload, iconStyles }) => {
       onClick={handleDownload}
       style={iconStyles}
       fontSize="large"
+      sx={{ '&:hover': { cursor: 'pointer' } }}
     />
   );
 };

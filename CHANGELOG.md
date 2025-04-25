@@ -13,7 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Core PGN viewer functionality with board, moves, and controls.
 - Support for parsing PGN strings directly or processing `<pgn>` tags within HTML content.
 - Props for customizing appearance (colors, width, orientation, coordinates).
-- Basic handling for `StartAtMove`, `EndAtMove`, and `Fen` headers.
+- Basic handling for `StartPly`, `EndPly`, and `Fen` headers.
+- Initial component structure and basic PGN parsing.
 
 ### Changed
 

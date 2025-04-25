@@ -13,6 +13,8 @@ interface PgnViewerProps {
   showCoordinates?: boolean;
   nodeToModify?: string;
   nodeModification?: (node: Element) => void; // Optional DOM modification after render
+  startPly?: number;
+  endPly?: number;
 }
 
 const PgnViewer: React.FC<PgnViewerProps> = ({
@@ -26,6 +28,8 @@ const PgnViewer: React.FC<PgnViewerProps> = ({
   showCoordinates = true,
   nodeToModify,
   nodeModification,
+  startPly,
+  endPly,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const pgnRootsRef = useRef<
@@ -45,6 +49,8 @@ const PgnViewer: React.FC<PgnViewerProps> = ({
             orientation={orientation === 'white' ? 'w' : 'b'}
             backgroundColor={backgroundColor}
             showCoordinates={showCoordinates}
+            startPly={startPly}
+            endPly={endPly}
           />
         </React.StrictMode>
       );
@@ -57,6 +63,8 @@ const PgnViewer: React.FC<PgnViewerProps> = ({
       orientation,
       backgroundColor,
       showCoordinates,
+      startPly,
+      endPly,
     ]
   );
 
@@ -100,6 +108,8 @@ const PgnViewer: React.FC<PgnViewerProps> = ({
               orientation={orientation === 'white' ? 'w' : 'b'}
               backgroundColor={backgroundColor}
               showCoordinates={showCoordinates}
+              startPly={startPly}
+              endPly={endPly}
             />
           </React.StrictMode>
         );
@@ -125,14 +135,16 @@ const PgnViewer: React.FC<PgnViewerProps> = ({
       });
     }
 
+    // Capture the ref's current value for the cleanup function.
+    const rootsMap = pgnRootsRef.current;
     return () => {
-      pgnRootsRef.current.forEach((rootData) => {
+      rootsMap.forEach((rootData) => {
         rootData.root.unmount();
         if (rootData.container.parentNode) {
           rootData.container.remove();
         }
       });
-      pgnRootsRef.current.clear();
+      rootsMap.clear();
     };
   }, [
     innerHtml,
@@ -145,6 +157,8 @@ const PgnViewer: React.FC<PgnViewerProps> = ({
     width,
     backgroundColor,
     showCoordinates,
+    startPly,
+    endPly,
     renderViewerIntoContainer,
   ]);
 
@@ -173,6 +187,8 @@ const PgnViewer: React.FC<PgnViewerProps> = ({
           orientation={orientation === 'white' ? 'w' : 'b'}
           backgroundColor={backgroundColor}
           showCoordinates={showCoordinates}
+          startPly={startPly}
+          endPly={endPly}
         />
       </div>
     );

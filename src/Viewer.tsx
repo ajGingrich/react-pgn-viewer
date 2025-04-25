@@ -22,6 +22,8 @@ interface ViewerProps {
   orientation?: 'w' | 'b';
   backgroundColor?: string;
   showCoordinates?: boolean;
+  startPly?: number;
+  endPly?: number;
 }
 
 const Viewer: React.FC<ViewerProps> = ({
@@ -32,19 +34,24 @@ const Viewer: React.FC<ViewerProps> = ({
   orientation: initialOrientation = 'w',
   backgroundColor = '#e1e5ed',
   showCoordinates = true,
+  startPly: initialStartPly = 1,
+  endPly: initialEndPly,
 }) => {
   const [history, setHistory] = useState<VerboseMove[]>([]);
   const [currentMoveIndex, setCurrentMoveIndex] = useState<number>(0);
   const [headerInfo, setHeaderInfo] = useState<PgnHeaders | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
-  // TODO: add startPly prop
-  const startPly = 0;
-  const endPly = Infinity;
+  const startPly = useMemo(
+    () => Math.max(0, initialStartPly ?? 0),
+    [initialStartPly]
+  );
+  const endPly = useMemo(
+    () => initialEndPly ?? history.length,
+    [initialEndPly, history.length]
+  );
+
   const fenPly = null;
-  // const [startPly, setStartPly] = useState<number>(0);
-  // const [endPly, setEndPly] = useState<number>(Infinity);
-  // const [fenPly, setFenPly] = useState<number | null>(null);
   const [windowWidth, setWindowWidth] = useState<number | null>(
     typeof window !== 'undefined' ? window.innerWidth : null
   );
@@ -121,7 +128,6 @@ const Viewer: React.FC<ViewerProps> = ({
         newChess.loadPgn(movesSection, { strict: false });
       }
 
-      // headers
       parseAndSetHeaders(pgnArray, newChess);
       const finalHeaders = newChess.getHeaders();
       setHeaderInfo(finalHeaders as PgnHeaders);
@@ -130,7 +136,37 @@ const Viewer: React.FC<ViewerProps> = ({
       setHistory(loadedMoves);
 
       chessInstanceRef.current = newChess;
-      updateStateFromChess(newChess);
+
+      const actualStartPly = Math.max(0, initialStartPly ?? 0);
+      if (actualStartPly > 0 && actualStartPly <= loadedMoves.length) {
+        const instanceForStart = new Chess();
+        if (movesSection) {
+          instanceForStart.loadPgn(movesSection, { strict: false });
+        }
+        parseAndSetHeaders(pgnArray, instanceForStart);
+
+        const movesToStart = loadedMoves.slice(0, actualStartPly);
+        movesToStart.forEach((move) => {
+          try {
+            instanceForStart.move(move.san);
+          } catch (e) {
+            /* ignore */
+          }
+        });
+        setCurrentFen(instanceForStart.fen());
+        setCurrentMoveIndex(actualStartPly);
+      } else {
+        setCurrentFen(newChess.fen());
+        setCurrentMoveIndex(0);
+      }
+
+      if (actualStartPly > 0) {
+        newChess.reset();
+        if (movesSection) {
+          newChess.loadPgn(movesSection, { strict: false });
+        }
+        parseAndSetHeaders(pgnArray, newChess);
+      }
     } catch (error: unknown) {
       console.error('Error loading PGN:', error);
       const message = error instanceof Error ? error.message : String(error);
@@ -140,7 +176,12 @@ const Viewer: React.FC<ViewerProps> = ({
       setCurrentFen('start');
       chessInstanceRef.current = null;
     }
-  }, [pgnInformation, updateStateFromChess, parseAndSetHeaders]);
+  }, [
+    pgnInformation,
+    updateStateFromChess,
+    parseAndSetHeaders,
+    initialStartPly,
+  ]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -161,42 +202,40 @@ const Viewer: React.FC<ViewerProps> = ({
   const goToPly = useCallback(
     (ply: number) => {
       const instance = chessInstanceRef.current;
-      if (!instance || ply < startPly || ply > endPly) return;
+      const targetPly = Math.max(startPly, Math.min(ply, endPly));
+      if (!instance || targetPly < startPly || targetPly > endPly) return;
 
-      const internalHistory = instance.history();
-      const currentInternalPly = internalHistory.length;
+      const currentInternalPly = instance.history().length;
+      const fullHistory = instance.history({ verbose: true }) as VerboseMove[];
 
-      if (ply > currentInternalPly) {
-        const movesToMake = history.slice(currentInternalPly, ply);
-        movesToMake.forEach((move) => {
-          try {
-            instance.move(move.san);
-          } catch (e) {
-            console.error('Error making move:', e);
-          }
-        });
-      } else if (ply < currentInternalPly) {
-        instance.reset();
-        const originalPgn = instance.pgn();
-        if (originalPgn) {
-          instance.loadPgn(originalPgn);
-        }
-        const movesToTarget = history.slice(0, ply);
-        movesToTarget.forEach((move) => {
-          try {
-            instance.move(move.san);
-          } catch (e) {
-            console.error('Error replaying move:', e);
-          }
-        });
-      } else {
+      if (targetPly === currentInternalPly) {
         return;
       }
 
-      setCurrentMoveIndex(ply);
+      instance.reset();
+      const originalPgn = instance.pgn();
+      if (originalPgn) {
+        instance.loadPgn(originalPgn, { strict: false });
+      }
+
+      const movesToTarget = (
+        instance.history({ verbose: true }) as VerboseMove[]
+      ).slice(0, targetPly);
+      movesToTarget.forEach((move) => {
+        try {
+          instance.move(move.san);
+        } catch (e) {
+          console.error(
+            `Error replaying move to ply ${targetPly}: ${move.san}`,
+            e
+          );
+        }
+      });
+
+      setCurrentMoveIndex(targetPly);
       updateStateFromChess(instance);
     },
-    [chessInstanceRef, history, startPly, endPly, updateStateFromChess]
+    [chessInstanceRef, startPly, endPly, updateStateFromChess]
   );
 
   const handleNextMove = useCallback(() => {
@@ -240,27 +279,6 @@ const Viewer: React.FC<ViewerProps> = ({
     return () => clearTimeout(playTimeoutRef.current as NodeJS.Timeout);
   }, [isPlaying, currentMoveIndex, endPly, handleNextMove]);
 
-  // TODO: clean this up
-  // const handleDownload = useCallback(() => {
-  //   if (!headerInfo && !chessInstanceRef.current) return;
-  //   const element = document.createElement('a');
-  //   const isFenMode = fenPly !== null;
-  //   const fileContent =
-  //     isFenMode || !pgnInformation ? currentFen : pgnInformation;
-  //   const fileFormat = isFenMode || !pgnInformation ? 'fen.txt' : 'pgn';
-
-  //   const whiteName = headerInfo?.White?.split(/[, ]+/)[0] || 'White';
-  //   const blackName = headerInfo?.Black?.split(/[, ]+/)[0] || 'Black';
-  //   const date = headerInfo?.Date?.replace(/\./g, '-') || 'Date';
-
-  //   element.href = URL.createObjectURL(
-  //     new Blob([fileContent], { type: 'text/plain;charset=utf-8' })
-  //   );
-  //   element.download = `${whiteName}_vs_${blackName}_${date}.${fileFormat}`;
-  //   document.body.appendChild(element);
-  //   element.click();
-  //   document.body.removeChild(element);
-  // }, [headerInfo, fenPly, currentFen, pgnInformation]);
   const handleDownload = () => {};
 
   const customSquareStyles: { [square: string]: CSSProperties } =
