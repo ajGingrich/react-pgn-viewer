@@ -79,7 +79,6 @@ function ChessGame() {
 | `orientation` | `'w' \| 'b'` | `'w'` | Board orientation (white/black at bottom) |
 | `width` | `number` | `600` | Width of the viewer in pixels |
 | `backgroundColor` | `string` | `"#e1e5ed"` | Background color of the viewer wrapper |
-| `showCoordinates` | `boolean` | `true` | Show file/rank coordinates |
 | `nodeToModify` | `string` | - | CSS selector for DOM modification (innerHTML mode) |
 | `nodeModification` | `(node: HTMLElement) => void` | - | Callback to modify selected DOM nodes |
 

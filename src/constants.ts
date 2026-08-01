@@ -24,7 +24,6 @@ export const DEFAULT_COLORS = {
 export const DEFAULTS = {
   WIDTH: 600,
   ORIENTATION: 'w' as const,
-  SHOW_COORDINATES: true,
   PLAY_DELAY_MS: 1000,
   MOBILE_BREAKPOINT: 768,
 } as const;
