@@ -24,7 +24,7 @@ A modern React component for displaying interactive chess PGN (Portable Game Not
 bun add react-pgn-viewer
 
 # Using npm
-npm install react-pgn-viewer
+bun install react-pgn-viewer
 
 # Using yarn
 yarn add react-pgn-viewer
