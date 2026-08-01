@@ -71,47 +71,15 @@ const PgnViewer: React.FC<PgnViewerProps> = ({
     return pgns;
   }, []);
 
-  /**
-   * Renders PGN viewers for innerHTML mode.
-   */
-  const renderPgnViewers = useCallback(() => {
-    if (!containerRef.current || !innerHTML || typeof children !== 'string') {
-      return null;
-    }
-
-    const pgns = extractPgnsFromHtml(children);
-
-    return pgns.map((pgn, index) => (
-      <Viewer
-        key={`pgn-${index}-${pgn.slice(0, 50)}`}
-        pgnInformation={pgn}
-        blackSquareColor={blackSquareColor}
-        whiteSquareColor={whiteSquareColor}
-        width={width}
-        orientation={orientation}
-        backgroundColor={backgroundColor}
-        showCoordinates={showCoordinates}
-      />
-    ));
-  }, [
-    children,
-    innerHTML,
-    extractPgnsFromHtml,
-    blackSquareColor,
-    whiteSquareColor,
-    width,
-    orientation,
-    backgroundColor,
-    showCoordinates,
-  ]);
-
   // Apply DOM modifications after mount and updates
   useEffect(() => {
     applyDomModifications();
   }, [applyDomModifications, children]);
 
-  // InnerHTML mode: render embedded PGN viewers
+  // InnerHTML mode: extract PGNs from children and render viewers
   if (innerHTML && typeof children === 'string') {
+    const pgns = extractPgnsFromHtml(children);
+
     return (
       <div ref={containerRef}>
         <div
@@ -119,7 +87,18 @@ const PgnViewer: React.FC<PgnViewerProps> = ({
           style={{ display: 'none' }}
           aria-hidden="true"
         />
-        {renderPgnViewers()}
+        {pgns.map((pgn, index) => (
+          <Viewer
+            key={`pgn-${index}-${pgn.slice(0, 50)}`}
+            pgnInformation={pgn}
+            blackSquareColor={blackSquareColor}
+            whiteSquareColor={whiteSquareColor}
+            width={width}
+            orientation={orientation}
+            backgroundColor={backgroundColor}
+            showCoordinates={showCoordinates}
+          />
+        ))}
       </div>
     );
   }
