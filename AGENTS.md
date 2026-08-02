@@ -2,6 +2,10 @@
 
 This file provides context for AI coding agents working on this codebase.
 
+> **IMPORTANT**: This project uses **Bun** as its package manager and runtime. All commands must use `bun`, never `npm` or `yarn`. Do not generate `package-lock.json` or `yarn.lock`.
+
+> **IMPORTANT**: This project uses **Bun** as its package manager and runtime. All commands must use `bun`, never `npm` or `yarn`. Do not generate `package-lock.json` or `yarn.lock`.
+
 ## Project Overview
 
 **react-pgn-viewer** is a React component library for displaying interactive chess PGN (Portable Game Notation) viewers. It renders a chessboard with move navigation controls.
@@ -158,3 +162,12 @@ GitHub Actions workflow (`.github/workflows/ci.yml`) runs on PRs:
 ### Modifying build output
 - Edit `tsup.config.ts` for build configuration
 - Edit `package.json` exports for module resolution
+
+## Browser Testing
+
+The project has a built-in `browser-use` agent that automates Chrome via DevTools. Use it to:
+- Verify the dev server renders correctly at `http://localhost:3000`
+- Check for console errors
+- Validate UI interactions
+
+Start the dev server first: `bun run dev`
