@@ -1,8 +1,0 @@
-# examples
-examples/
-
-# babel rc
-.babelrc
-
-# yarn error
-yarn-error.log

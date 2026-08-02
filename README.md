@@ -1,112 +1,193 @@
-# React Pgn Viewer
+# React PGN Viewer
 
 ![npm version](https://img.shields.io/npm/v/react-pgn-viewer.svg)
 ![npm Downloads](https://img.shields.io/npm/dt/react-pgn-viewer.svg)
 ![license](https://img.shields.io/npm/l/react-pgn-viewer.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue)
+
+A modern React component for displaying interactive chess PGN (Portable Game Notation) viewers. Built with **React 19**, **TypeScript**, **chess.js 1.x**, and **react-chessboard**.
+
+## Features
+
+- 🎯 **React 19** functional components with hooks
+- 📝 **Full TypeScript** support with exported types
+- ♟️ **chess.js 1.x** for PGN parsing and move validation
+- 🎨 **react-chessboard** for the chessboard display
+- 📱 **Responsive** layout with mobile support
+- ⚡ **Dual ESM/CJS** output for maximum compatibility
+- 🛡️ **Security** - XSS prevention with header sanitization
 
 ## Installation
 
+```bash
+# Using bun (recommended)
+bun add react-pgn-viewer
+
+# Using npm
+bun install react-pgn-viewer
+
+# Using yarn
+yarn add react-pgn-viewer
 ```
-npm install react-pgn-viewer --save
-```
 
-## Usage
+### Peer Dependencies
 
-```
-import PgnViewer from 'react-pgn-viewer'
-
-class Example1 extends React.Component {
-
-  htmlModification = (node) => {
-    modifyNode(node)
-  }
-
-  render() {
-    return (
-      <PgnViewer
-        blackSquareColour='steelBlue'
-        nodeToModify='pre code'
-        nodeModification={this.htmlModification}
-        innerHTML
-      >
-        {'<pgn>1.e4 e5 2.f4 exf4'</pgn>}
-      </PgnViewer
-      )
-  }
+```json
+{
+  "react": "^18.0.0 || ^19.0.0",
+  "react-dom": "^18.0.0 || ^19.0.0"
 }
 ```
 
-**OR**
+## Quick Start
 
-```
-import PgnViewer from 'react-pgn-viewer'
+```tsx
+import PgnViewer from 'react-pgn-viewer';
 
-class Example2 extends React.Component {
+function ChessGame() {
+  const pgn = `
+    [Event "World Chess Championship"]
+    [Date "2024.12.12"]
+    [White "D. Gukesh"]
+    [Black "Ding Liren"]
+    [Result "1-0"]
 
-  render() {
-    return (
-      <PgnViewer
-        blackSquareColour='steelBlue'
-        innerHTML={false}
-      >
-        1.e4 e5 2.f4 exf4
-      </PgnViewer
-      )
-  }
+    1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7
+    6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Nb8 10. d4 Nbd7
+  `;
+
+  return (
+    <PgnViewer blackSquareColor="steelblue" whiteSquareColor="aliceblue" width={600}>
+      {pgn}
+    </PgnViewer>
+  );
 }
 ```
 
-#### Different viewing methods
+## Props
 
-For viewing partial pgns or a singular FEN position, add these modifiers to the pgn text
+| Prop               | Type                          | Default       | Description                                        |
+| ------------------ | ----------------------------- | ------------- | -------------------------------------------------- |
+| `children`         | `string`                      | -             | PGN string content                                 |
+| `innerHTML`        | `boolean`                     | `false`       | When `true`, parses `<pgn>` tags from children     |
+| `blackSquareColor` | `string`                      | `"steelblue"` | Color of dark squares                              |
+| `whiteSquareColor` | `string`                      | `"aliceblue"` | Color of light squares                             |
+| `orientation`      | `'w' \| 'b'`                  | `'w'`         | Board orientation (white/black at bottom)          |
+| `width`            | `number`                      | `600`         | Width of the viewer in pixels                      |
+| `backgroundColor`  | `string`                      | `"#e1e5ed"`   | Background color of the viewer wrapper             |
+| `showCoordinates`  | `boolean`                     | `true`        | Show file/rank coordinates on the board            |
+| `nodeToModify`     | `string`                      | -             | CSS selector for DOM modification (innerHTML mode) |
+| `nodeModification` | `(node: HTMLElement) => void` | -             | Callback to modify selected DOM nodes              |
 
-| Modifier | Explanation |
-| --- | :-------: |
-| [StartAtMove "8"] | This will skip the first 7 moves and start immediately at move 8. Must be a whole number. |
-| [EndAtMove "15"] | This will cut off the game after move 15 and must be used in combination with StartAtMove. Must be a whole number. |
-| [Fen "10w"] | Fen cannot be used with StartAtMove or EndAtMove because it is one position. This shows move 10 after white moved so it will be blacks move |
-| [Fen "15b"] | This shows the position after Black moved in 15. It will be whites move. |
+## TypeScript Types
 
-#### The styles
-The icons use font-awesome 4 CSS. If you aren't already using that, simply put the cdn in the head of your html
+All types are exported from the package for TypeScript users:
 
-```
-<head>
-  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-  integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-...
-</head>
-```
-
-## Properties
-
-This library uses [reactjs-chessboard](https://github.com/ajgingrich/reactjs-chessboard) for the board logic and display and it shares many props.
-
-| Prop | Type | Default | Explanation |
-| --- | :---: | :------: | :-------: |
-| innerHTML | boolean | true | if true, will parse the pgn elements. If false, will make only one pgn from a text string |
-| nodeToModify | string | N/A | HTML element that should be modified by `nodeModification`. *Only applicable if innerHTML is true.* |
-| nodeModification | function | N/A | instructions for modify different HTML elements besides `<pgn>`. *Only applicable if innerHTML is true.* |
-| backgroundColor | string | #e1e5ed | background of the entire viewer |
-| blackSquareColor | string | SteelBlue | color of the dark squares |
-| whiteSquareColor | string | AliceBlue | color of the light squares |
-| orientation | string | 'w' | board orientation |
-| width | string (%) or number (px) | 600 | Width of the board and move list. The board will be 2/3rds of the width. |
-| showCoordinates | boolean | true | should show coordinates along the A file and first Rank |
-
-## Demo
-
-https://blog.andrewgingrich.com/#/post/2018/07/22/chess-urbina-duran-2018
-
-## Contributing
-
-To run the examples:
-
-```
-npm install
-npm run dev
+```tsx
+import type {
+  PgnViewerProps,
+  ViewerProps,
+  PgnHeader,
+  MoveListProps,
+  MoveProps,
+  FooterButtonProps,
+  BoardStyles,
+  StyleParams,
+  ResponsiveStyleResult,
+} from 'react-pgn-viewer';
 ```
 
-Then open `localhost:8000` in a browser.
+## Partial Games and FEN Positions
 
-Tested with React 16.3
+You can display partial games or start from a specific FEN position by adding custom headers to your PGN:
+
+| Header              | Description                                |
+| ------------------- | ------------------------------------------ |
+| `[StartAtMove "8"]` | Skip the first 7 moves and start at move 8 |
+| `[EndAtMove "15"]`  | Cut off the game after move 15             |
+| `[Fen "..."]`       | Start from a specific FEN position         |
+
+### Example: Partial Game
+
+```pgn
+[Event "Example"]
+[StartAtMove "4"]
+[EndAtMove "8"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O
+```
+
+### Example: FEN Position
+
+```pgn
+[Event "Example"]
+[Fen "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1"]
+```
+
+## Development
+
+### Prerequisites
+
+- [Bun](https://bun.sh/) package manager
+
+### Getting Started
+
+```bash
+# Install dependencies
+bun install
+
+# Start development server
+bun run dev
+
+# Run tests
+bun run test:run
+
+# Type check
+bun run typecheck
+
+# Build for production
+bun run build
+
+# Run tests with coverage
+bun run test:coverage
+```
+
+### Available Scripts
+
+| Script                  | Description                                 |
+| ----------------------- | ------------------------------------------- |
+| `bun run dev`           | Start Vite dev server                       |
+| `bun run build`         | Build library with tsup (ESM + CJS + .d.ts) |
+| `bun run test`          | Run tests in watch mode                     |
+| `bun run test:run`      | Run tests once                              |
+| `bun run test:coverage` | Run tests with coverage report              |
+| `bun run typecheck`     | Run TypeScript type checking                |
+| `bun run lint`          | Run ESLint                                  |
+| `bun run clean`         | Remove dist and node_modules                |
+
+## Tech Stack
+
+- **React 19** - UI framework
+- **TypeScript 5.7** - Type safety
+- **chess.js 1.x** - PGN parsing and move generation
+- **react-chessboard 4.x** - Chess board component
+- **tsup** - Library bundler (ESM + CJS + .d.ts)
+- **Vite** - Dev server
+- **Vitest** - Testing framework
+- **Bun** - Package manager
+
+## Build Output
+
+The library produces three output formats:
+
+```
+dist/
+├── index.js      # ESM module
+├── index.cjs     # CommonJS module
+├── index.d.ts    # TypeScript declarations
+└── index.d.cts   # CJS TypeScript declarations
+```
+
+## License
+
+MIT © Andrew Gingrich
