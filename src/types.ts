@@ -42,6 +42,8 @@ export interface PgnViewerProps {
   readonly width?: number;
   /** Background color of the viewer wrapper */
   readonly backgroundColor?: string;
+  /** Whether to show board coordinates (file/rank labels) */
+  readonly showCoordinates?: boolean;
   /** CSS selector for DOM nodes to modify after render */
   readonly nodeToModify?: string;
   /** Callback function to apply modifications to selected nodes */
@@ -62,6 +64,8 @@ export interface ViewerProps {
   readonly orientation?: 'w' | 'b';
   /** Background color */
   readonly backgroundColor?: string;
+  /** Whether to show board coordinates (file/rank labels) */
+  readonly showCoordinates?: boolean;
 }
 
 /** Props for the BoardHeader component */

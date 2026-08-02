@@ -70,6 +70,7 @@ const Viewer: React.FC<ViewerProps> = ({
   width: defaultWidth = DEFAULTS.WIDTH,
   orientation: initialOrientation = DEFAULTS.ORIENTATION,
   backgroundColor = '#e1e5ed',
+  showCoordinates = DEFAULTS.SHOW_COORDINATES,
 }) => {
   // ============================================================
   // State
@@ -302,6 +303,7 @@ const Viewer: React.FC<ViewerProps> = ({
           customDarkSquareStyle={{ backgroundColor: blackSquareColor }}
           customLightSquareStyle={{ backgroundColor: whiteSquareColor }}
           boardWidth={boardWidth}
+          showBoardNotation={showCoordinates}
         />
         {!isMobile && (
           <MoveList

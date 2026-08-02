@@ -1,0 +1,40 @@
+# Changelog
+
+## 2.0.0 (2026-08-01)
+
+### ⚠️ Breaking Changes
+
+- **React 19 support**: Minimum peer dependency is now React 18 or 19 (was React 16)
+- **TypeScript**: Package is now written in TypeScript with full type definitions
+- **chess.js 1.x**: Uses `loadPgn()` API instead of `load_pgn()` from chess.js 0.10
+- **react-chessboard**: Replaced `reactjs-chessboard` with `react-chessboard` v4
+- **Build system**: Gulp replaced with tsup (ESM + CJS + .d.ts) and Bun package manager
+- **Module format**: Dual ESM/CJS output (`dist/index.js` and `dist/index.cjs`)
+
+### Added
+
+- Full TypeScript support with exported types (`PgnViewerProps`, `ViewerProps`, `PgnHeader`, etc.)
+- `showCoordinates` prop to control board coordinate display (maps to `showBoardNotation`)
+- `backgroundColor` prop for custom viewer background color
+- `nodeToModify` and `nodeModification` props for DOM manipulation
+- `innerHTML` mode for rendering multiple PGN games from HTML content
+- Vitest test suite with 47+ tests
+- GitHub Actions CI workflow (typecheck, test, build)
+- Vite dev server for development
+
+### Fixed
+
+- XSS prevention via `sanitizeHeaderValue` for PGN header content
+- Auto-play timer uses refs to avoid stale closure bugs
+- URL object revocation timing for downloads
+- InnerHTML mode correctly extracts PGNs from children string
+
+### Removed
+
+- Gulp build system
+- Babel configuration
+- Legacy JavaScript source files (replaced with TypeScript)
+
+## 1.0.0
+
+- Initial release with React 16 class components

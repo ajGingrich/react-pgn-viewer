@@ -27,6 +27,7 @@ const PgnViewer: React.FC<PgnViewerProps> = ({
   orientation = DEFAULTS.ORIENTATION,
   width = DEFAULTS.WIDTH,
   backgroundColor = '#e1e5ed',
+  showCoordinates = DEFAULTS.SHOW_COORDINATES,
   nodeToModify,
   nodeModification,
 }) => {
@@ -95,6 +96,7 @@ const PgnViewer: React.FC<PgnViewerProps> = ({
             width={width}
             orientation={orientation}
             backgroundColor={backgroundColor}
+            showCoordinates={showCoordinates}
           />
         ))}
       </div>
@@ -117,6 +119,7 @@ const PgnViewer: React.FC<PgnViewerProps> = ({
         width={width}
         orientation={orientation}
         backgroundColor={backgroundColor}
+        showCoordinates={showCoordinates}
       />
     </div>
   );
