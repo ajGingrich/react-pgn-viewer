@@ -10,7 +10,6 @@ const baseStyles: BoardStyles = {
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'row',
-    flexWrap: 'wrap',
   },
   wrapper: {
     width: 500,

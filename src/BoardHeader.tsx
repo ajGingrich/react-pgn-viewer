@@ -47,6 +47,7 @@ const BoardHeader: React.FC<BoardHeaderProps> = ({ headerInfo, width }) => {
   if (!gameInfo) return null;
 
   const containerStyles: React.CSSProperties = {
+    boxSizing: 'border-box',
     padding: '8px 12px',
     borderBottom: '1px solid #e0e0e0',
     backgroundColor: '#fafafa',

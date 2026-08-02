@@ -16,18 +16,18 @@ This file provides context for AI coding agents working on this codebase.
 
 ## Tech Stack
 
-| Tool | Purpose |
-|------|---------|
-| React 19 | UI framework (peer dependency: ^18 or ^19) |
-| TypeScript 5.7 | Type safety and exports |
-| chess.js 1.x | PGN parsing and move validation |
-| react-chessboard 4.x | Chess board rendering |
-| tsup | Library bundler (ESM + CJS + .d.ts) |
-| Vite 6 | Dev server |
-| Vitest 2 | Testing framework |
-| Bun | Package manager |
-| Prettier | Code formatting |
-| ESLint 9 | Linting (flat config) |
+| Tool                 | Purpose                                    |
+| -------------------- | ------------------------------------------ |
+| React 19             | UI framework (peer dependency: ^18 or ^19) |
+| TypeScript 5.7       | Type safety and exports                    |
+| chess.js 1.x         | PGN parsing and move validation            |
+| react-chessboard 4.x | Chess board rendering                      |
+| tsup                 | Library bundler (ESM + CJS + .d.ts)        |
+| Vite 6               | Dev server                                 |
+| Vitest 2             | Testing framework                          |
+| Bun                  | Package manager                            |
+| Prettier             | Code formatting                            |
+| ESLint 9             | Linting (flat config)                      |
 
 ## Commands
 
@@ -104,6 +104,7 @@ Viewer (src/Viewer.tsx)
 ### Module Output
 
 The library ships as:
+
 - `dist/index.js` — ESM module
 - `dist/index.cjs` — CommonJS module
 - `dist/index.d.ts` — TypeScript declarations
@@ -112,6 +113,7 @@ The library ships as:
 ## Conventions
 
 ### Code Style
+
 - Functional components with hooks (no class components)
 - TypeScript strict mode — no `any` types allowed
 - `React.memo()` on exported components for performance
@@ -119,17 +121,20 @@ The library ships as:
 - `readonly` on all interface properties
 
 ### File Naming
+
 - PascalCase for component files (e.g., `BoardFooter.tsx`)
 - camelCase for utility files (e.g., `helpers.ts`)
 - Test files: `*.test.ts` or `*.test.tsx` in `src/__tests__/`
 
 ### Testing
+
 - Vitest with jsdom environment
 - `@testing-library/react` for component tests
 - Run `bun run test:run` before committing
 - 47+ tests covering helpers, sanitization, PGN validation, and component rendering
 
 ### Security
+
 - `sanitizeHeaderValue()` strips `<`, `>`, and script tags from PGN headers
 - `isValidPgn()` validates basic PGN structure before parsing
 - Input validation on all public props
@@ -137,6 +142,7 @@ The library ships as:
 ## CI/CD
 
 GitHub Actions workflow (`.github/workflows/ci.yml`) runs on PRs:
+
 1. Format check (`bun run format:check`)
 2. Type check (`bun run typecheck`)
 3. Tests (`bun run test:run`)
@@ -145,6 +151,7 @@ GitHub Actions workflow (`.github/workflows/ci.yml`) runs on PRs:
 ## Common Tasks
 
 ### Adding a new prop
+
 1. Add to `PgnViewerProps` in `src/types.ts`
 2. Add to `ViewerProps` in `src/types.ts` if it reaches the Viewer
 3. Destructure with default in `src/index.tsx` and/or `src/Viewer.tsx`
@@ -153,6 +160,7 @@ GitHub Actions workflow (`.github/workflows/ci.yml`) runs on PRs:
 6. Add tests
 
 ### Adding a new footer button
+
 1. Create component in `src/Footer/` extending `FooterButtonProps`
 2. Add handler in `Viewer.tsx`
 3. Pass handler to `BoardFooter.tsx`
@@ -160,12 +168,14 @@ GitHub Actions workflow (`.github/workflows/ci.yml`) runs on PRs:
 5. Add test in `viewer.test.tsx`
 
 ### Modifying build output
+
 - Edit `tsup.config.ts` for build configuration
 - Edit `package.json` exports for module resolution
 
 ## Browser Testing
 
 The project has a built-in `browser-use` agent that automates Chrome via DevTools. Use it to:
+
 - Verify the dev server renders correctly at `http://localhost:3000`
 - Check for console errors
 - Validate UI interactions

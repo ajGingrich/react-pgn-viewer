@@ -86,6 +86,8 @@ export interface MoveListProps {
   readonly onChangeMove: (moveIndex: number) => void;
   /** Width of the move list container */
   readonly width: number | string;
+  /** Maximum height of the scrollable move list area */
+  readonly maxHeight?: number;
   /** Starting move index (for partial games) */
   readonly startAtMove: number;
   /** Ending move index (for partial games) */
@@ -110,10 +112,10 @@ export interface MoveProps {
 export interface FooterButtonProps {
   /** Click handler */
   readonly onClick: () => void;
-  /** Icon styles */
-  readonly iconStyles: React.CSSProperties;
   /** Accessibility label */
   readonly ariaLabel?: string;
+  /** Whether the button is in an active/toggled state */
+  readonly isActive?: boolean;
 }
 
 /** Props for Play button */

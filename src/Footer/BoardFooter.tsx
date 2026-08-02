@@ -36,33 +36,29 @@ const BoardFooter: React.FC<BoardFooterProps> = ({
   width,
 }) => {
   const footerStyles: React.CSSProperties = {
-    cursor: 'pointer',
+    boxSizing: 'border-box',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    gap: '6px',
     width,
-    paddingTop: '10px',
-    paddingBottom: '5px',
+    padding: '10px 12px',
     borderTop: '1px solid #e0e0e0',
     backgroundColor: '#fafafa',
-  };
-
-  const iconStyles: React.CSSProperties = {
-    paddingLeft: '20px',
   };
 
   const showNavigation = fenMove === null;
 
   return (
     <div style={footerStyles} role="toolbar" aria-label="Chess controls">
-      {showNavigation && <Reset onClick={onReset} iconStyles={iconStyles} />}
-      {showNavigation && <PreviousMove onClick={onPreviousMove} iconStyles={iconStyles} />}
-      {showNavigation && <NextMove onClick={onNextMove} iconStyles={iconStyles} />}
-      {showNavigation && <LastMove onClick={onLastMove} iconStyles={iconStyles} />}
-      {showNavigation && <Play onClick={onPlay} iconStyles={iconStyles} isPlaying={isPlaying} />}
-      <Flip onClick={onFlipBoard} iconStyles={iconStyles} />
-      <Download onClick={onDownload} iconStyles={iconStyles} />
+      {showNavigation && <Reset onClick={onReset} />}
+      {showNavigation && <PreviousMove onClick={onPreviousMove} />}
+      {showNavigation && <NextMove onClick={onNextMove} />}
+      {showNavigation && <LastMove onClick={onLastMove} />}
+      {showNavigation && <Play onClick={onPlay} isPlaying={isPlaying} />}
+      <Flip onClick={onFlipBoard} />
+      <Download onClick={onDownload} />
     </div>
   );
 };

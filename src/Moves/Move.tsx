@@ -28,6 +28,7 @@ const Move: React.FC<MoveProps> = ({ move, moveIndex, currentIndex, onChangeMove
     cursor: 'pointer',
     color: 'black',
     display: 'inline-block',
+    whiteSpace: 'nowrap',
     fontWeight: isActive ? 700 : 400,
     padding: '2px 4px',
     borderRadius: '3px',
@@ -42,6 +43,7 @@ const Move: React.FC<MoveProps> = ({ move, moveIndex, currentIndex, onChangeMove
       style={moveStyles}
       role="button"
       tabIndex={0}
+      data-move-index={moveIndex}
       aria-label={`Move ${moveIndex}: ${move}${isActive ? ' (current)' : ''}`}
       aria-current={isActive ? 'step' : undefined}
     >

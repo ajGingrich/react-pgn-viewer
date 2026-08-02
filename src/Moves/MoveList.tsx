@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import Move from './Move';
 import type { MoveListProps } from '../types';
 
@@ -11,19 +11,25 @@ const MoveList: React.FC<MoveListProps> = ({
   currentIndex,
   onChangeMove,
   width,
+  maxHeight,
   startAtMove,
   endAtMove,
   fenMove,
 }) => {
+  const listRef = useRef<HTMLDivElement>(null);
+
   const containerStyles: React.CSSProperties = {
+    boxSizing: 'border-box',
     width,
-    paddingLeft: '10px',
-    paddingRight: '5px',
+    padding: '10px 12px',
     fontSize: '14px',
-    lineHeight: '20px',
-    maxHeight: '400px',
+    lineHeight: '22px',
+    maxHeight,
     overflowY: 'auto',
+    overscrollBehavior: 'contain',
     scrollbarWidth: 'thin',
+    scrollbarColor: '#b4bcc8 transparent',
+    backgroundColor: '#fcfcfd',
   };
 
   const filteredMoves = useMemo(() => {
@@ -38,6 +44,29 @@ const MoveList: React.FC<MoveListProps> = ({
       .filter((item): item is { move: string; moveIndex: number } => item !== null);
   }, [moves, startAtMove, endAtMove]);
 
+  // Inject WebKit scrollbar styling once (inline styles cannot target pseudo-elements).
+  useEffect(() => {
+    const styleId = 'pgn-movelist-scrollbar';
+    if (document.getElementById(styleId)) return;
+
+    const style = document.createElement('style');
+    style.id = styleId;
+    style.textContent = `
+      .pgnViewerMoveList::-webkit-scrollbar { width: 8px; }
+      .pgnViewerMoveList::-webkit-scrollbar-track { background: transparent; }
+      .pgnViewerMoveList::-webkit-scrollbar-thumb { background: #c2cad6; border-radius: 4px; }
+      .pgnViewerMoveList::-webkit-scrollbar-thumb:hover { background: #a6b0bf; }
+    `;
+    document.head.appendChild(style);
+  }, []);
+
+  // Keep the active move visible while navigating through the game.
+  useEffect(() => {
+    if (!listRef.current || currentIndex <= 0) return;
+    const activeMove = listRef.current.querySelector(`[data-move-index="${currentIndex}"]`);
+    activeMove?.scrollIntoView?.({ block: 'nearest' });
+  }, [currentIndex]);
+
   if (!moves || moves.length === 0) {
     return null;
   }
@@ -51,7 +80,13 @@ const MoveList: React.FC<MoveListProps> = ({
   }
 
   return (
-    <div className="pgnViewerMoveList" style={containerStyles} role="list" aria-label="Chess moves">
+    <div
+      ref={listRef}
+      className="pgnViewerMoveList"
+      style={containerStyles}
+      role="list"
+      aria-label="Chess moves"
+    >
       {filteredMoves.map(({ move, moveIndex }) => (
         <Move
           key={moveIndex}

@@ -283,8 +283,12 @@ const Viewer: React.FC<ViewerProps> = ({
 
   const moveListWidth = useMemo(() => {
     const w = typeof width === 'number' ? width : 600;
-    return isMobile ? w : Math.floor((1 / 3) * w);
-  }, [isMobile, width]);
+    return isMobile ? w : w - boardWidth;
+  }, [isMobile, width, boardWidth]);
+
+  const moveListMaxHeight = useMemo(() => {
+    return isMobile ? 320 : boardWidth + 4;
+  }, [isMobile, boardWidth]);
 
   // ============================================================
   // Render
@@ -293,26 +297,29 @@ const Viewer: React.FC<ViewerProps> = ({
     <div className="pgnWrapper" style={wrapperStyles}>
       {headerInfo && <BoardHeader headerInfo={headerInfo} width={width} />}
       <div className="pgnViewerMain" style={baseStyles}>
-        <Chessboard
-          position={fen}
-          boardOrientation={orientation === 'w' ? 'white' : 'black'}
-          animationDuration={200}
-          arePiecesDraggable={false}
-          customBoardStyle={{
-            border: '2px solid lightgrey',
-            borderRadius: '4px',
-          }}
-          customDarkSquareStyle={{ backgroundColor: blackSquareColor }}
-          customLightSquareStyle={{ backgroundColor: whiteSquareColor }}
-          boardWidth={boardWidth}
-          showBoardNotation={showCoordinates}
-        />
+        <div style={{ width: boardWidth }}>
+          <Chessboard
+            position={fen}
+            boardOrientation={orientation === 'w' ? 'white' : 'black'}
+            animationDuration={200}
+            arePiecesDraggable={false}
+            customBoardStyle={{
+              border: '2px solid lightgrey',
+              borderRadius: '4px',
+            }}
+            customDarkSquareStyle={{ backgroundColor: blackSquareColor }}
+            customLightSquareStyle={{ backgroundColor: whiteSquareColor }}
+            boardWidth={boardWidth}
+            showBoardNotation={showCoordinates}
+          />
+        </div>
         {!isMobile && (
           <MoveList
             onChangeMove={handleChangeMove}
             currentIndex={currentIndex}
             moves={moves}
             width={moveListWidth}
+            maxHeight={moveListMaxHeight}
             startAtMove={startAtMove.current}
             endAtMove={endAtMove.current}
             fenMove={fenMove.current}
@@ -337,6 +344,7 @@ const Viewer: React.FC<ViewerProps> = ({
           currentIndex={currentIndex}
           moves={moves}
           width={width}
+          maxHeight={moveListMaxHeight}
           startAtMove={startAtMove.current}
           endAtMove={endAtMove.current}
           fenMove={fenMove.current}
