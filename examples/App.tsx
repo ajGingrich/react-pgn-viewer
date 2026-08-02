@@ -52,6 +52,7 @@ const App: React.FC = () => {
         <PgnViewer
           width={700}
           orientation="w"
+          showCoordinates={true}
           backgroundColor="#f0f0f0"
         >
           {EXAMPLE_PGN}
@@ -63,6 +64,7 @@ const App: React.FC = () => {
         <PgnViewer
           width={700}
           orientation="w"
+          showCoordinates={true}
           backgroundColor="#e8f4e8"
         >
           {EXAMPLE_PGN_2}
