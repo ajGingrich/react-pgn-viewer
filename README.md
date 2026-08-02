@@ -57,11 +57,7 @@ function ChessGame() {
   `;
 
   return (
-    <PgnViewer
-      blackSquareColor="steelblue"
-      whiteSquareColor="aliceblue"
-      width={600}
-    >
+    <PgnViewer blackSquareColor="steelblue" whiteSquareColor="aliceblue" width={600}>
       {pgn}
     </PgnViewer>
   );
@@ -70,18 +66,18 @@ function ChessGame() {
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `children` | `string` | - | PGN string content |
-| `innerHTML` | `boolean` | `false` | When `true`, parses `<pgn>` tags from children |
-| `blackSquareColor` | `string` | `"steelblue"` | Color of dark squares |
-| `whiteSquareColor` | `string` | `"aliceblue"` | Color of light squares |
-| `orientation` | `'w' \| 'b'` | `'w'` | Board orientation (white/black at bottom) |
-| `width` | `number` | `600` | Width of the viewer in pixels |
-| `backgroundColor` | `string` | `"#e1e5ed"` | Background color of the viewer wrapper |
-| `showCoordinates` | `boolean` | `true` | Show file/rank coordinates on the board |
-| `nodeToModify` | `string` | - | CSS selector for DOM modification (innerHTML mode) |
-| `nodeModification` | `(node: HTMLElement) => void` | - | Callback to modify selected DOM nodes |
+| Prop               | Type                          | Default       | Description                                        |
+| ------------------ | ----------------------------- | ------------- | -------------------------------------------------- |
+| `children`         | `string`                      | -             | PGN string content                                 |
+| `innerHTML`        | `boolean`                     | `false`       | When `true`, parses `<pgn>` tags from children     |
+| `blackSquareColor` | `string`                      | `"steelblue"` | Color of dark squares                              |
+| `whiteSquareColor` | `string`                      | `"aliceblue"` | Color of light squares                             |
+| `orientation`      | `'w' \| 'b'`                  | `'w'`         | Board orientation (white/black at bottom)          |
+| `width`            | `number`                      | `600`         | Width of the viewer in pixels                      |
+| `backgroundColor`  | `string`                      | `"#e1e5ed"`   | Background color of the viewer wrapper             |
+| `showCoordinates`  | `boolean`                     | `true`        | Show file/rank coordinates on the board            |
+| `nodeToModify`     | `string`                      | -             | CSS selector for DOM modification (innerHTML mode) |
+| `nodeModification` | `(node: HTMLElement) => void` | -             | Callback to modify selected DOM nodes              |
 
 ## TypeScript Types
 
@@ -105,11 +101,11 @@ import type {
 
 You can display partial games or start from a specific FEN position by adding custom headers to your PGN:
 
-| Header | Description |
-|--------|-------------|
+| Header              | Description                                |
+| ------------------- | ------------------------------------------ |
 | `[StartAtMove "8"]` | Skip the first 7 moves and start at move 8 |
-| `[EndAtMove "15"]` | Cut off the game after move 15 |
-| `[Fen "..."]` | Start from a specific FEN position |
+| `[EndAtMove "15"]`  | Cut off the game after move 15             |
+| `[Fen "..."]`       | Start from a specific FEN position         |
 
 ### Example: Partial Game
 
@@ -158,16 +154,16 @@ bun run test:coverage
 
 ### Available Scripts
 
-| Script | Description |
-|--------|-------------|
-| `bun run dev` | Start Vite dev server |
-| `bun run build` | Build library with tsup (ESM + CJS + .d.ts) |
-| `bun run test` | Run tests in watch mode |
-| `bun run test:run` | Run tests once |
-| `bun run test:coverage` | Run tests with coverage report |
-| `bun run typecheck` | Run TypeScript type checking |
-| `bun run lint` | Run ESLint |
-| `bun run clean` | Remove dist and node_modules |
+| Script                  | Description                                 |
+| ----------------------- | ------------------------------------------- |
+| `bun run dev`           | Start Vite dev server                       |
+| `bun run build`         | Build library with tsup (ESM + CJS + .d.ts) |
+| `bun run test`          | Run tests in watch mode                     |
+| `bun run test:run`      | Run tests once                              |
+| `bun run test:coverage` | Run tests with coverage report              |
+| `bun run typecheck`     | Run TypeScript type checking                |
+| `bun run lint`          | Run ESLint                                  |
+| `bun run clean`         | Remove dist and node_modules                |
 
 ## Tech Stack
 

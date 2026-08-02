@@ -49,24 +49,14 @@ const App: React.FC = () => {
 
       <div style={{ marginTop: '2rem' }}>
         <h2 style={headerStyles}>Gukesh vs Ding Liren</h2>
-        <PgnViewer
-          width={700}
-          orientation="w"
-          showCoordinates={true}
-          backgroundColor="#f0f0f0"
-        >
+        <PgnViewer width={700} orientation="w" showCoordinates={true} backgroundColor="#f0f0f0">
           {EXAMPLE_PGN}
         </PgnViewer>
       </div>
 
       <div style={{ marginTop: '3rem' }}>
         <h2 style={headerStyles}>Carlsen vs Nakamura</h2>
-        <PgnViewer
-          width={700}
-          orientation="w"
-          showCoordinates={true}
-          backgroundColor="#e8f4e8"
-        >
+        <PgnViewer width={700} orientation="w" showCoordinates={true} backgroundColor="#e8f4e8">
           {EXAMPLE_PGN_2}
         </PgnViewer>
       </div>

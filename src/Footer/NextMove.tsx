@@ -20,7 +20,7 @@ const NextMove: React.FC<FooterButtonProps> = ({
         onClick();
       }
     },
-    [onClick]
+    [onClick],
   );
 
   return (

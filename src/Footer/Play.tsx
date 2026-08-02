@@ -18,7 +18,7 @@ const Play: React.FC<PlayProps> = ({ onClick, iconStyles, isPlaying, ariaLabel }
         onClick();
       }
     },
-    [onClick]
+    [onClick],
   );
 
   const iconClass = isPlaying ? 'fa-pause' : 'fa-play';

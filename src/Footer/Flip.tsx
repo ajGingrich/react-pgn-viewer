@@ -4,11 +4,7 @@ import type { FooterButtonProps } from '../types';
 /**
  * Flip button - toggles board orientation between white and black.
  */
-const Flip: React.FC<FooterButtonProps> = ({
-  onClick,
-  iconStyles,
-  ariaLabel = 'Flip board',
-}) => {
+const Flip: React.FC<FooterButtonProps> = ({ onClick, iconStyles, ariaLabel = 'Flip board' }) => {
   const handleClick = useCallback(() => {
     onClick();
   }, [onClick]);
@@ -20,7 +16,7 @@ const Flip: React.FC<FooterButtonProps> = ({
         onClick();
       }
     },
-    [onClick]
+    [onClick],
   );
 
   return (

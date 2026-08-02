@@ -4,7 +4,11 @@ import type { FooterButtonProps } from '../types';
 /**
  * Download button - exports PGN or FEN file.
  */
-const Download: React.FC<FooterButtonProps> = ({ onClick, iconStyles, ariaLabel = 'Download game' }) => {
+const Download: React.FC<FooterButtonProps> = ({
+  onClick,
+  iconStyles,
+  ariaLabel = 'Download game',
+}) => {
   const handleClick = useCallback(() => {
     onClick();
   }, [onClick]);
@@ -16,7 +20,7 @@ const Download: React.FC<FooterButtonProps> = ({ onClick, iconStyles, ariaLabel 
         onClick();
       }
     },
-    [onClick]
+    [onClick],
   );
 
   return (

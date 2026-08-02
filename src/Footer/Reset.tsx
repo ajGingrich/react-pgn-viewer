@@ -4,7 +4,11 @@ import type { FooterButtonProps } from '../types';
 /**
  * Reset button - returns to the starting position.
  */
-const Reset: React.FC<FooterButtonProps> = ({ onClick, iconStyles, ariaLabel = 'Reset to start' }) => {
+const Reset: React.FC<FooterButtonProps> = ({
+  onClick,
+  iconStyles,
+  ariaLabel = 'Reset to start',
+}) => {
   const handleClick = useCallback(() => {
     onClick();
   }, [onClick]);
@@ -16,7 +20,7 @@ const Reset: React.FC<FooterButtonProps> = ({ onClick, iconStyles, ariaLabel = '
         onClick();
       }
     },
-    [onClick]
+    [onClick],
   );
 
   return (

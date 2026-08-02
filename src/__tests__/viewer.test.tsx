@@ -146,13 +146,9 @@ describe('PgnViewer component', () => {
 
   it('should apply custom colors', () => {
     render(
-      <PgnViewer
-        blackSquareColor="#000000"
-        whiteSquareColor="#ffffff"
-        backgroundColor="#333333"
-      >
+      <PgnViewer blackSquareColor="#000000" whiteSquareColor="#ffffff" backgroundColor="#333333">
         {SIMPLE_PGN}
-      </PgnViewer>
+      </PgnViewer>,
     );
 
     const wrapper = document.querySelector('.pgnWrapper') as HTMLElement;
@@ -301,11 +297,7 @@ describe('innerHTML mode', () => {
 
 describe('security', () => {
   it('should sanitize header values', () => {
-    const maliciousPgn = [
-      '[Event "<script>alert(1)</script>"]',
-      '',
-      '1. e4 e5 1-0',
-    ].join('\n');
+    const maliciousPgn = ['[Event "<script>alert(1)</script>"]', '', '1. e4 e5 1-0'].join('\n');
 
     render(<PgnViewer>{maliciousPgn}</PgnViewer>);
     expect(document.querySelector('.pgnWrapper')).toBeTruthy();

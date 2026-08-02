@@ -7,10 +7,7 @@ import type { ResponsiveStyleResult, StyleParams } from './types';
  * Extracts the active square from a chess move string.
  * Returns the destination square for normal moves, or castling destination.
  */
-export const getActiveSquare = (
-  moves: readonly string[],
-  index: number
-): string | null => {
+export const getActiveSquare = (moves: readonly string[], index: number): string | null => {
   if (!moves || index <= 0 || index > moves.length) {
     return null;
   }
@@ -39,7 +36,7 @@ const applyStyleOverrides = (
     area: 'base' | 'wrapper';
     property: string;
     value: string | number;
-  }>
+  }>,
 ): { base: CSSProperties; wrapper: CSSProperties } => {
   const modified = {
     base: { ...baseStyles.base },
@@ -104,4 +101,3 @@ export const isValidPgn = (pgn: string): boolean => {
   // Basic validation: should have at least one move (number followed by period)
   return /\d+\.\s*\S+/.test(pgn);
 };
-

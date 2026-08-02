@@ -51,12 +51,7 @@ const MoveList: React.FC<MoveListProps> = ({
   }
 
   return (
-    <div
-      className="pgnViewerMoveList"
-      style={containerStyles}
-      role="list"
-      aria-label="Chess moves"
-    >
+    <div className="pgnViewerMoveList" style={containerStyles} role="list" aria-label="Chess moves">
       {filteredMoves.map(({ move, moveIndex }) => (
         <Move
           key={moveIndex}

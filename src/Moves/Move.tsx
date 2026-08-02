@@ -21,7 +21,7 @@ const Move: React.FC<MoveProps> = ({ move, moveIndex, currentIndex, onChangeMove
         onChangeMove(moveIndex);
       }
     },
-    [onChangeMove, moveIndex]
+    [onChangeMove, moveIndex],
   );
 
   const moveStyles: React.CSSProperties = {

@@ -75,14 +75,16 @@ const Viewer: React.FC<ViewerProps> = ({
   // ============================================================
   // State
   // ============================================================
-  const [fen, setFen] = useState<string>('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');
+  const [fen, setFen] = useState<string>(
+    'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+  );
   const [moves, setMoves] = useState<readonly string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [headerInfo, setHeaderInfo] = useState<PgnHeader | null>(null);
   const [orientation, setOrientation] = useState<'w' | 'b'>(initialOrientation);
   const [isPlaying, setIsPlaying] = useState(false);
   const [windowWidth, setWindowWidth] = useState<number>(
-    typeof window !== 'undefined' ? window.innerWidth : DEFAULTS.WIDTH
+    typeof window !== 'undefined' ? window.innerWidth : DEFAULTS.WIDTH,
   );
 
   const startAtMove = useRef(0);
@@ -135,7 +137,7 @@ const Viewer: React.FC<ViewerProps> = ({
       const isBlackTurn = fenParts[1] === 'b';
       const fenBoard = fenParts[0] ?? '';
       const moveNumber = parseInt(fenBoard.split('/').pop() ?? '1', 10);
-      initialFenMove = isBlackTurn ? moveNumber * 2 : (moveNumber * 2) - 1;
+      initialFenMove = isBlackTurn ? moveNumber * 2 : moveNumber * 2 - 1;
       fenMove.current = initialFenMove;
     }
 
@@ -235,7 +237,7 @@ const Viewer: React.FC<ViewerProps> = ({
       setFen(newFen);
       setCurrentIndex(moveIndex);
     },
-    [replayToIndex, moves]
+    [replayToIndex, moves],
   );
 
   const handleDownload = useCallback(() => {
@@ -271,7 +273,7 @@ const Viewer: React.FC<ViewerProps> = ({
         backgroundColor,
         defaultWidth,
       }),
-    [windowWidth, backgroundColor, defaultWidth]
+    [windowWidth, backgroundColor, defaultWidth],
   );
 
   const boardWidth = useMemo(() => {
