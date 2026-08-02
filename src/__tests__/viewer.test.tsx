@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import { Chess } from 'chess.js';
 import PgnViewer from '../index';
 
@@ -269,7 +269,9 @@ describe('innerHTML mode', () => {
       '</pgn>',
     ].join('\n');
 
-    render(<PgnViewer innerHTML>{htmlContent}</PgnViewer>);
+    act(() => {
+      render(<PgnViewer innerHTML>{htmlContent}</PgnViewer>);
+    });
     // Should render the viewer wrapper
     const wrapper = document.querySelector('.pgnWrapper');
     expect(wrapper).toBeTruthy();
@@ -285,8 +287,10 @@ describe('innerHTML mode', () => {
       '1. d4 d5 1-0</pgn>',
     ].join('\n');
 
-    const { container } = render(<PgnViewer innerHTML>{htmlContent}</PgnViewer>);
-    const viewers = container.querySelectorAll('.pgnWrapper');
+    act(() => {
+      render(<PgnViewer innerHTML>{htmlContent}</PgnViewer>);
+    });
+    const viewers = document.querySelectorAll('.pgnWrapper');
     expect(viewers.length).toBe(2);
   });
 });
