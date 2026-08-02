@@ -28,7 +28,17 @@
     "typecheck": "bun tsc --noEmit",
     "format": "bun prettier --write .",
     "format:check": "bun prettier --check .",
-    "clean": "bun rm -rf dist node_modules"
+    "clean": "bun rm -rf dist node_modules",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{js,jsx,json,css,md}": [
+      "prettier --write"
+    ]
   },
   "repository": {
     "type": "git",
@@ -63,7 +73,9 @@
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.0",
     "globals": "^15.0.0",
+    "husky": "^9.1.7",
     "jsdom": "^25.0.0",
+    "lint-staged": "^17.3.0",
     "prettier": "^3.9.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
