@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useCallback } from 'react';
+import { createRoot, type Root } from 'react-dom/client';
 import Viewer from './Viewer';
 import { isValidPgn } from './helpers';
 import { DEFAULTS } from './constants';
@@ -32,6 +33,25 @@ const PgnViewer: React.FC<PgnViewerProps> = ({
   nodeModification,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const viewerRootsRef = useRef<Root[]>([]);
+
+  /**
+   * Builds a Viewer element for the given PGN string.
+   */
+  const makeViewer = useCallback(
+    (pgnInformation: string) => (
+      <Viewer
+        pgnInformation={pgnInformation}
+        blackSquareColor={blackSquareColor}
+        whiteSquareColor={whiteSquareColor}
+        width={width}
+        orientation={orientation}
+        backgroundColor={backgroundColor}
+        showCoordinates={showCoordinates}
+      />
+    ),
+    [blackSquareColor, whiteSquareColor, width, orientation, backgroundColor, showCoordinates],
+  );
 
   /**
    * Applies DOM modifications after render if configured.
@@ -54,53 +74,42 @@ const PgnViewer: React.FC<PgnViewerProps> = ({
   }, [nodeToModify, nodeModification]);
 
   /**
-   * Extracts PGN content from innerHTML children.
+   * Unmounts all previously mounted viewer roots.
    */
-  const extractPgnsFromHtml = useCallback((htmlContent: string): string[] => {
-    const pgns: string[] = [];
-    const regex = /<pgn>([\s\S]*?)<\/pgn>/gi;
-    let match;
-
-    while ((match = regex.exec(htmlContent)) !== null) {
-      const pgn = match[1]?.trim();
-      if (pgn && isValidPgn(pgn)) {
-        pgns.push(pgn);
-      }
-    }
-
-    return pgns;
+  const unmountViewers = useCallback(() => {
+    viewerRootsRef.current.forEach((root) => root.unmount());
+    viewerRootsRef.current = [];
   }, []);
 
-  // Apply DOM modifications after mount and updates
+  // InnerHTML mode: render the HTML visibly, then mount a Viewer in place of each <pgn> node.
   useEffect(() => {
+    if (!innerHTML || !containerRef.current) return;
+
+    unmountViewers();
     applyDomModifications();
-  }, [applyDomModifications, children]);
 
-  // InnerHTML mode: extract PGNs from children and render viewers
+    const nodes = containerRef.current.querySelectorAll('pgn');
+    nodes.forEach((node) => {
+      const pgn = (node.innerHTML || '').trim();
+      if (pgn && isValidPgn(pgn)) {
+        const root = createRoot(node);
+        root.render(makeViewer(pgn));
+        viewerRootsRef.current.push(root);
+      }
+    });
+  }, [innerHTML, children, makeViewer, applyDomModifications, unmountViewers]);
+
+  // Cleanup viewer roots on unmount. Deferred to a microtask so the roots are not
+  // unmounted synchronously while React is tearing down the parent tree (React 19+).
+  useEffect(() => {
+    return () => {
+      queueMicrotask(unmountViewers);
+    };
+  }, [unmountViewers]);
+
+  // InnerHTML mode: render children as visible HTML, viewers are mounted in place of <pgn> nodes
   if (innerHTML && typeof children === 'string') {
-    const pgns = extractPgnsFromHtml(children);
-
-    return (
-      <div ref={containerRef}>
-        <div
-          dangerouslySetInnerHTML={{ __html: children }}
-          style={{ display: 'none' }}
-          aria-hidden="true"
-        />
-        {pgns.map((pgn, index) => (
-          <Viewer
-            key={`pgn-${index}-${pgn.slice(0, 50)}`}
-            pgnInformation={pgn}
-            blackSquareColor={blackSquareColor}
-            whiteSquareColor={whiteSquareColor}
-            width={width}
-            orientation={orientation}
-            backgroundColor={backgroundColor}
-            showCoordinates={showCoordinates}
-          />
-        ))}
-      </div>
-    );
+    return <div ref={containerRef} dangerouslySetInnerHTML={{ __html: children }} />;
   }
 
   // Direct PGN mode: render single viewer
@@ -110,19 +119,7 @@ const PgnViewer: React.FC<PgnViewerProps> = ({
     return null;
   }
 
-  return (
-    <div ref={containerRef}>
-      <Viewer
-        pgnInformation={pgnContent}
-        blackSquareColor={blackSquareColor}
-        whiteSquareColor={whiteSquareColor}
-        width={width}
-        orientation={orientation}
-        backgroundColor={backgroundColor}
-        showCoordinates={showCoordinates}
-      />
-    </div>
-  );
+  return <div ref={containerRef}>{makeViewer(pgnContent)}</div>;
 };
 
 export default React.memo(PgnViewer);

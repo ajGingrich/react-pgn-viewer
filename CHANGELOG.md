@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.0.1 (2026-08-02)
+
+### Fixed
+
+- **InnerHTML mode no longer hides page content**: The raw HTML was previously rendered in a hidden `display: none` container with chess viewers appended afterward, which made surrounding prose invisible. The viewer now renders the HTML visibly and mounts a viewer in place of each `<pgn>` node, so surrounding content (paragraphs, headings, code blocks) displays correctly.
+- **Server-side rendering (SSR) compatibility**: Viewers are now mounted with `createRoot` inside the `<pgn>` nodes rather than rendered as siblings, avoiding hydration mismatch warnings when the component is server-rendered (e.g. in Next.js).
+
+### Added
+
+- `examples/ssr/` example demonstrating server-side rendering with client hydration.
+
 ## 2.0.0 (2026-08-01)
 
 ### ⚠️ Breaking Changes
